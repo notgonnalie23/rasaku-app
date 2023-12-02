@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -28,6 +28,7 @@ import app.capstone.rasaku.R
 import app.capstone.rasaku.ui.component.FoodCard
 import app.capstone.rasaku.ui.component.Header
 import app.capstone.rasaku.ui.theme.RasakuTheme
+import app.capstone.rasaku.utils.gridItems
 import coil.compose.AsyncImage
 
 @Composable
@@ -59,29 +60,43 @@ private fun HomeContent(
             dummyImage,
             dummyImage,
         )
+        val foodList = listOf(
+            Food("Food #1", "https://placehold.co/96x109/png"),
+            Food("Food #2", "https://placehold.co/96x109/png"),
+            Food("Food #3", "https://placehold.co/96x109/png"),
+            Food("Food #4", "https://placehold.co/96x109/png"),
+            Food("Food #5", "https://placehold.co/96x109/png"),
+            Food("Food #6", "https://placehold.co/96x109/png"),
+            Food("Food #7", "https://placehold.co/96x109/png"),
+            Food("Food #8", "https://placehold.co/96x109/png"),
+            Food("Food #9", "https://placehold.co/96x109/png"),
+        )
 
         Header(
             imageUrl = imageUrl,
             navigateToSearchInput = navigateToSearch,
         )
-        Carousel(imageList = imageList)
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(96.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = modifier.padding(horizontal = 32.dp, vertical = 24.dp),
-        ) {
-            items(9) { index ->
+        LazyColumn(
+            modifier = modifier.fillMaxSize()
+        ){
+            item { Carousel(imageList = imageList) }
+            gridItems(
+                data = foodList,
+                columnCount = 3,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = modifier.padding(horizontal = 32.dp, vertical= 16.dp)
+            ){item ->
                 Box(
                     contentAlignment = Alignment.Center,
-                ) {
+                ){
                     FoodCard(
-                        name = "Food #${index + 1}",
-                        imageUrl = "https://placehold.co/96x109/png",
-                        onClick = { /*TODO : Navigate to Food Detail*/ },
+                        name = item.name,
+                        imageUrl = item.imageUrl,
+                        onClick = { /*TODO: Navigate to Food Detail*/ }
                     )
                 }
             }
+
         }
     }
 }
@@ -128,6 +143,11 @@ private fun Carousel(
         }
     }
 }
+
+private class Food(
+    val name : String,
+    val imageUrl: String
+)
 
 
 @Preview(showBackground = true)
