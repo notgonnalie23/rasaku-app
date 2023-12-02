@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -78,21 +79,22 @@ private fun HomeContent(
         )
         LazyColumn(
             modifier = modifier.fillMaxSize()
-        ){
+        ) {
             item {
                 Carousel(
                     imageList = imageList,
                     modifier = modifier.padding(bottom = 16.dp)
-                )}
+                )
+            }
             gridItems(
                 data = foodList,
                 columnCount = 3,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = modifier.padding(horizontal = 32.dp, vertical = 4.dp)
-            ){item ->
+            ) { item ->
                 Box(
                     contentAlignment = Alignment.Center,
-                ){
+                ) {
                     FoodCard(
                         name = item.name,
                         imageUrl = item.imageUrl,
@@ -100,7 +102,9 @@ private fun HomeContent(
                     )
                 }
             }
-
+            item {
+                Spacer(modifier = modifier.height(24.dp))
+            }
         }
     }
 }
@@ -145,11 +149,12 @@ private fun Carousel(
                 ) {}
             }
         }
+        Spacer(modifier = modifier.height(16.dp))
     }
 }
 
 private class Food(
-    val name : String,
+    val name: String,
     val imageUrl: String
 )
 
