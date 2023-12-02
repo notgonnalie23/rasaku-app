@@ -29,6 +29,7 @@ import coil.compose.AsyncImage
 @Composable
 fun Header(
     imageUrl: String,
+    navigateToSearchInput: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -54,6 +55,7 @@ fun Header(
                 .background(MaterialTheme.colorScheme.surfaceVariant)
                 .clickable {
                     // TODO : Navigate to SearchInput Screen
+                    navigateToSearchInput()
                 }
         ) {
             Text(
@@ -70,6 +72,9 @@ fun Header(
 @Composable
 private fun HeaderPreview() {
     RasakuTheme {
-        Header(imageUrl = "")
+        Header(
+            imageUrl = "",
+            navigateToSearchInput = {},
+        )
     }
 }

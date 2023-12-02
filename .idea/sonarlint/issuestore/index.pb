@@ -29,3 +29,10 @@ z
 Japp/src/main/java/app/capstone/rasaku/ui/screen/favorite/FavoriteScreen.kt,d\3\d3d90f4830f9203531d2f3a0ab01ee8189056bb4
 v
 Fapp/src/main/java/app/capstone/rasaku/ui/screen/camera/CameraScreen.kt,5\1\51a50a3d6fdd6f1dea927fab77510f3f12b8a25b
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+l
+<app/src/main/java/app/capstone/rasaku/ui/component/Header.kt,6\8\683b9fd12a69ca2c4d2e0677fcb4228e5e171955
+€
+Papp/src/main/java/app/capstone/rasaku/ui/screen/searchinput/SearchInputScreen.kt,4\9\49b8129313ce7d382d94a4a4d8383fb2cf60e54c

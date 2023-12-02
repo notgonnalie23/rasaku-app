@@ -7,7 +7,6 @@ import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
@@ -31,6 +30,7 @@ import app.capstone.rasaku.ui.screen.favorite.FavoriteScreen
 import app.capstone.rasaku.ui.screen.history.HistoryScreen
 import app.capstone.rasaku.ui.screen.home.HomeScreen
 import app.capstone.rasaku.ui.screen.search.SearchScreen
+import app.capstone.rasaku.ui.screen.searchinput.SearchInputScreen
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
 @Composable
@@ -54,11 +54,24 @@ fun RasakuApp(
             startDestination = "home",
             modifier = modifier.padding(innerPadding),
         ) {
-            composable(Screen.Home.route) { HomeScreen() }
-            composable(Screen.Search.route) { SearchScreen() }
+            composable(Screen.Home.route) {
+                HomeScreen(
+                    navigateToSearch = { navController.navigate(Screen.SearchInput.route) }
+                )
+            }
+            composable(Screen.Search.route) {
+                SearchScreen(
+                    navigateToSearch = { navController.navigate(Screen.SearchInput.route) }
+                )
+            }
             composable(Screen.Camera.route) { CameraScreen() }
             composable(Screen.Favorite.route) { FavoriteScreen() }
             composable(Screen.History.route) { HistoryScreen() }
+            composable(Screen.SearchInput.route) {
+                SearchInputScreen(
+                    navigateBack = {navController.navigateUp()}
+                )
+            }
         }
     }
 }
@@ -70,7 +83,7 @@ private fun BottomBar(
     NavigationBar(
         modifier = modifier,
         windowInsets = NavigationBarDefaults.windowInsets
-        ) {
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         val navigationItem = listOf(

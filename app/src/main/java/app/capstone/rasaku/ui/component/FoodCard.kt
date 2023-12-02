@@ -1,5 +1,6 @@
 package app.capstone.rasaku.ui.component
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -26,21 +27,25 @@ fun FoodCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ElevatedCard(
-        onClick = onClick,
-        modifier = modifier.width(96.dp)
+    Box(
+        modifier = modifier.padding(8.dp)
     ) {
-        FoodCardImage(
-            imageUrl = imageUrl,
-            modifier = modifier.height(109.dp)
-        )
-        Text(
-            text = name,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = modifier.padding(8.dp),
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 2,
-        )
+        ElevatedCard(
+            onClick = onClick,
+            modifier = modifier.width(96.dp)
+        ) {
+            FoodCardImage(
+                imageUrl = imageUrl,
+                modifier = modifier.height(109.dp)
+            )
+            Text(
+                text = name,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = modifier.padding(8.dp),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2,
+            )
+        }
     }
 }
 

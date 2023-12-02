@@ -32,10 +32,12 @@ import coil.compose.AsyncImage
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToSearch: () -> Unit
 ) {
     HomeContent(
         imageUrl = "https://placehold.co/48x48/png",
+        navigateToSearch = navigateToSearch,
         modifier = modifier,
     )
 }
@@ -43,6 +45,7 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     imageUrl: String,
+    navigateToSearch: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -57,12 +60,15 @@ private fun HomeContent(
             dummyImage,
         )
 
-        Header(imageUrl = imageUrl)
+        Header(
+            imageUrl = imageUrl,
+            navigateToSearchInput = navigateToSearch,
+            )
         Carousel(imageList = imageList)
         LazyVerticalGrid(
             columns = GridCells.Adaptive(96.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = modifier.padding(horizontal = 32.dp, vertical = 24.dp),
         ) {
             items(9) { index ->
@@ -127,5 +133,7 @@ private fun Carousel(
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    RasakuTheme { HomeScreen() }
+    RasakuTheme {
+        HomeScreen(navigateToSearch = {})
+    }
 }
