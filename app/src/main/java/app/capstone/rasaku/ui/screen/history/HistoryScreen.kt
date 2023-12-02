@@ -1,4 +1,4 @@
-package app.capstone.rasaku.ui.screen.home
+package app.capstone.rasaku.ui.screen.history
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,21 +7,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
 @Composable
-fun HomeScreen(
+fun HistoryScreen(
     modifier : Modifier = Modifier
 ){
-    HomeContent(modifier = modifier)
+    HistoryContent(modifier = modifier)
 }
 
 @Composable
-private fun HomeContent(
+private fun HistoryContent(
     modifier: Modifier,
 ) {
-    Text("It's a homepage")
+    Text("It's a history page")
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview(){
-    RasakuTheme { HomeScreen()}
+private fun HistoryScreenPreview(){
+    RasakuTheme { HistoryScreen()}
 }

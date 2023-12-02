@@ -1,4 +1,4 @@
-package app.capstone.rasaku.ui.screen.home
+package app.capstone.rasaku.ui.screen.camera
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,21 +7,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
 @Composable
-fun HomeScreen(
+fun CameraScreen(
     modifier : Modifier = Modifier
 ){
-    HomeContent(modifier = modifier)
+    CameraContent(modifier = modifier)
 }
 
 @Composable
-private fun HomeContent(
+private fun CameraContent(
     modifier: Modifier,
 ) {
-    Text("It's a homepage")
+    Text("It's a camera page")
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview(){
-    RasakuTheme { HomeScreen()}
+private fun CameraScreenPreview(){
+    RasakuTheme { CameraScreen()}
 }

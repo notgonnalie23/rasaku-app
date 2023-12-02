@@ -19,6 +19,6 @@ class MainViewModel: ViewModel(){
     }
 
     companion object {
-        const val DELAY_IN_MILLIS = 1000L
+        const val DELAY_IN_MILLIS = 800L
     }
 }

@@ -1,4 +1,4 @@
-package app.capstone.rasaku.ui.screen.home
+package app.capstone.rasaku.ui.screen.search
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,21 +7,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
 @Composable
-fun HomeScreen(
+fun SearchScreen(
     modifier : Modifier = Modifier
 ){
-    HomeContent(modifier = modifier)
+    SearchContent(modifier = modifier)
 }
 
 @Composable
-private fun HomeContent(
+private fun SearchContent(
     modifier: Modifier,
 ) {
-    Text("It's a homepage")
+    Text("It's a search page")
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview(){
-    RasakuTheme { HomeScreen()}
+private fun SearchScreenPreview(){
+    RasakuTheme { SearchScreen()}
 }
