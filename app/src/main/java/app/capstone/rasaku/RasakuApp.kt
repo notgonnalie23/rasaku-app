@@ -10,6 +10,7 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
@@ -32,7 +33,6 @@ import app.capstone.rasaku.ui.screen.home.HomeScreen
 import app.capstone.rasaku.ui.screen.search.SearchScreen
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RasakuApp(
     modifier: Modifier = Modifier,
@@ -67,7 +67,10 @@ fun RasakuApp(
 private fun BottomBar(
     navController: NavHostController, modifier: Modifier = Modifier
 ) {
-    NavigationBar(modifier = modifier) {
+    NavigationBar(
+        modifier = modifier,
+        windowInsets = NavigationBarDefaults.windowInsets
+        ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         val navigationItem = listOf(
@@ -112,7 +115,7 @@ private fun BottomBar(
 
 @Preview(showBackground = true)
 @Composable
-fun RasakuAppPreview() {
+private fun RasakuAppPreview() {
     RasakuTheme {
         RasakuApp()
     }
