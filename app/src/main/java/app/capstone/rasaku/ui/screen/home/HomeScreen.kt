@@ -54,7 +54,7 @@ private fun HomeContent(
     ) {
         // TODO : Ganti data dummy jadi data dari API
         val dummyImage = "https://placehold.co/375x352/png"
-        val imageList = listOf<String>(
+        val imageList = listOf(
             dummyImage,
             dummyImage,
             dummyImage,
@@ -79,12 +79,16 @@ private fun HomeContent(
         LazyColumn(
             modifier = modifier.fillMaxSize()
         ){
-            item { Carousel(imageList = imageList) }
+            item {
+                Carousel(
+                    imageList = imageList,
+                    modifier = modifier.padding(bottom = 16.dp)
+                )}
             gridItems(
                 data = foodList,
                 columnCount = 3,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = modifier.padding(horizontal = 32.dp, vertical= 16.dp)
+                modifier = modifier.padding(horizontal = 32.dp, vertical = 4.dp)
             ){item ->
                 Box(
                     contentAlignment = Alignment.Center,
