@@ -19,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import app.capstone.rasaku.navigation.NavigationItem
 import app.capstone.rasaku.navigation.Screen
 import app.capstone.rasaku.ui.screen.camera.CameraScreen
@@ -31,6 +33,7 @@ import app.capstone.rasaku.ui.screen.history.HistoryScreen
 import app.capstone.rasaku.ui.screen.home.HomeScreen
 import app.capstone.rasaku.ui.screen.search.SearchScreen
 import app.capstone.rasaku.ui.screen.searchinput.SearchInputScreen
+import app.capstone.rasaku.ui.screen.searchresult.SearchResultScreen
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
 @Composable
@@ -69,7 +72,20 @@ fun RasakuApp(
             composable(Screen.History.route) { HistoryScreen() }
             composable(Screen.SearchInput.route) {
                 SearchInputScreen(
-                    navigateBack = {navController.navigateUp()}
+                    navigateBack = { navController.navigateUp() },
+                    navigateToSearchResult = { query ->
+                        navController.navigate(Screen.SearchResult.createRoute(query))
+                    }
+                )
+            }
+            composable(
+                route = Screen.SearchResult.route,
+                arguments = listOf(navArgument("query") { type = NavType.StringType })
+            ) {
+                val query = it.arguments?.getString("query") ?: ""
+                SearchResultScreen(
+                    query = query,
+                    navigateToSearch = { navController.navigate(Screen.SearchInput.route) }
                 )
             }
         }

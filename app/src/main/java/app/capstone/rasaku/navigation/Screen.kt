@@ -7,5 +7,8 @@ sealed class Screen(val route: String) {
     object Favorite : Screen("favorite")
     object History : Screen("history")
     object SearchInput : Screen("search/query")
+    object SearchResult : Screen("search/query/{query}"){
+        fun createRoute(query: String) = "search/query/$query"
+    }
 
 }

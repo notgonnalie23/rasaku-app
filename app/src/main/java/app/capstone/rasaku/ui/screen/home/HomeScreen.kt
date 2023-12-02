@@ -63,7 +63,7 @@ private fun HomeContent(
         Header(
             imageUrl = imageUrl,
             navigateToSearchInput = navigateToSearch,
-            )
+        )
         Carousel(imageList = imageList)
         LazyVerticalGrid(
             columns = GridCells.Adaptive(96.dp),
@@ -105,7 +105,7 @@ private fun Carousel(
             AsyncImage(
                 model = imageList[index],
                 contentDescription = null,
-                placeholder = painterResource(id = R.drawable.placeholder_48x48),
+                placeholder = painterResource(id = R.drawable.img_placeholder),
                 contentScale = ContentScale.Crop,
                 modifier = modifier
                     .fillMaxWidth()

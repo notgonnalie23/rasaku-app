@@ -57,7 +57,7 @@ private fun FoodCardImage(
     AsyncImage(
         model = imageUrl,
         contentDescription = null,
-        placeholder = painterResource(id = R.drawable.placeholder_card),
+        placeholder = painterResource(id = R.drawable.img_placeholder),
         contentScale = ContentScale.Crop,
         modifier = modifier
     )

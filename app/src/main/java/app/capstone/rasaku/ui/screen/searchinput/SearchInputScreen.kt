@@ -27,10 +27,24 @@ import app.capstone.rasaku.R
 import app.capstone.rasaku.ui.theme.RasakuTheme
 import coil.compose.AsyncImage
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchInputScreen(
-    navigateBack : () -> Unit,
+    navigateBack: () -> Unit,
+    navigateToSearchResult : (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SearchInputContent(
+        navigateBack = navigateBack,
+        navigateToSearchResult = navigateToSearchResult,
+        modifier = modifier
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SearchInputContent(
+    navigateBack: () -> Unit,
+    navigateToSearchResult: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var query by remember { mutableStateOf("") }
@@ -45,7 +59,7 @@ fun SearchInputScreen(
     SearchBar(
         query = query,
         onQueryChange = { query = it },
-        onSearch = { },
+        onSearch = { navigateToSearchResult(query) },
         active = true,
         onActiveChange = {},
         placeholder = { Text(stringResource(R.string.search_food)) },
@@ -75,7 +89,7 @@ fun SearchInputScreen(
                         AsyncImage(
                             model = "https://placehold.co/56x56/png",
                             contentDescription = null,
-                            placeholder = painterResource(id = R.drawable.placeholder_48x48),
+                            placeholder = painterResource(id = R.drawable.img_placeholder),
                             contentScale = ContentScale.Crop,
                             modifier = modifier.size(56.dp)
                         )
@@ -87,7 +101,6 @@ fun SearchInputScreen(
                         )
                     },
                     trailingContent = {
-
                         Icon(imageVector = Icons.Rounded.Close,
                             contentDescription = null,
                             modifier = Modifier.clickable {
@@ -95,6 +108,9 @@ fun SearchInputScreen(
                             }
                         )
                     },
+                    modifier = Modifier.clickable {
+//                        TODO: Navigate to food detail
+                    }
                 )
             }
         }
@@ -105,6 +121,6 @@ fun SearchInputScreen(
 @Composable
 private fun SearchInputScreenPreview() {
     RasakuTheme {
-        SearchInputScreen({})
+        SearchInputScreen({}, {})
     }
 }

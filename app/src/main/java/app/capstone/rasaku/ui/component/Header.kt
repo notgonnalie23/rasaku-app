@@ -40,7 +40,7 @@ fun Header(
         AsyncImage(
             model = imageUrl,
             contentDescription = null,
-            placeholder = painterResource(id = R.drawable.placeholder_48x48),
+            placeholder = painterResource(id = R.drawable.img_placeholder),
             contentScale = ContentScale.Crop,
             modifier = modifier
                 .size(48.dp)
@@ -54,7 +54,6 @@ fun Header(
                 .clip(RoundedCornerShape(24.dp))
                 .background(MaterialTheme.colorScheme.surfaceVariant)
                 .clickable {
-                    // TODO : Navigate to SearchInput Screen
                     navigateToSearchInput()
                 }
         ) {
