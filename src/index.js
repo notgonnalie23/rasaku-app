@@ -3,7 +3,9 @@ const app = express();
 const foodRoutes = require('./routes/foods')
 
 
-app.use('/foods', foodRoutes);
+app.use('/', foodRoutes);
+
+// app.use('/foods/:id', foodRoutes)
 
 
 app.listen(4000, () => {
