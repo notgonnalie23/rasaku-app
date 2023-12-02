@@ -90,7 +90,7 @@ private fun HomeContent(
                 data = foodList,
                 columnCount = 3,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = modifier.padding(horizontal = 32.dp, vertical = 4.dp)
+                modifier = modifier.padding(horizontal = 24.dp, vertical = 4.dp)
             ) { item ->
                 Box(
                     contentAlignment = Alignment.Center,
