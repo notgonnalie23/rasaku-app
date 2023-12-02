@@ -1,8 +1,12 @@
 package app.capstone.rasaku.ui.screen.search
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import app.capstone.rasaku.ui.component.CategorySection
 import app.capstone.rasaku.ui.component.Header
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
@@ -24,7 +28,16 @@ private fun SearchContent(
     navigateToSearch: () -> Unit,
     modifier: Modifier,
 ) {
-    Header(imageUrl = imageUrl, navigateToSearchInput = navigateToSearch)
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ){
+        item{
+        Header(imageUrl = imageUrl, navigateToSearchInput = navigateToSearch)
+        }
+        items(4){ index ->
+            CategorySection(title = "Section #$index")
+        }
+    }
 }
 
 @Preview(showBackground = true)
