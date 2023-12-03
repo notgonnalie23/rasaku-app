@@ -1,6 +1,7 @@
 package app.capstone.rasaku.ui.screen.history
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
@@ -34,7 +35,7 @@ private fun HistoryContent(
                 headlineContent = {
                     Text(
                         text = "Food #$index",
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 },
                 leadingContent = {
@@ -43,14 +44,18 @@ private fun HistoryContent(
                         contentDescription = null,
                         placeholder = painterResource(id = R.drawable.img_placeholder),
                         contentScale = ContentScale.Crop,
-                        modifier = modifier.size(56.dp)
+                        modifier = modifier
+                            .padding(start = 24.dp)
+                            .size(56.dp)
                     )
                 },
                 trailingContent = {
                     Text(
                         text = "00.00",
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        style = MaterialTheme.typography.labelSmall
+                        style = MaterialTheme.typography.labelSmall,
+                        modifier = modifier
+                            .padding(end = 8.dp)
                     )
                 },
                 modifier = Modifier.clickable {
