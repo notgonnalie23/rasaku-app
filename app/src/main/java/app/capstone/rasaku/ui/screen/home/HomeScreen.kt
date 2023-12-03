@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.capstone.rasaku.R
 import app.capstone.rasaku.ui.component.FoodCard
-import app.capstone.rasaku.ui.component.Header
 import app.capstone.rasaku.ui.theme.RasakuTheme
 import app.capstone.rasaku.utils.gridItems
 import coil.compose.AsyncImage
@@ -35,19 +34,14 @@ import coil.compose.AsyncImage
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navigateToSearch: () -> Unit
 ) {
     HomeContent(
-        imageUrl = "https://placehold.co/48x48/png",
-        navigateToSearch = navigateToSearch,
         modifier = modifier,
     )
 }
 
 @Composable
 private fun HomeContent(
-    imageUrl: String,
-    navigateToSearch: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -73,10 +67,7 @@ private fun HomeContent(
             Food("Food #9", "https://placehold.co/96x109/png"),
         )
 
-        Header(
-            imageUrl = imageUrl,
-            navigateToSearchInput = navigateToSearch,
-        )
+
         LazyColumn(
             modifier = modifier.fillMaxSize()
         ) {
@@ -163,6 +154,6 @@ private class Food(
 @Composable
 private fun HomeScreenPreview() {
     RasakuTheme {
-        HomeScreen(navigateToSearch = {})
+        HomeScreen()
     }
 }

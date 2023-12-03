@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Rasaku</string>
     <string name="search_food">Cari makanan...</string>
+    <string name="history">Riwayat</string>
 </resources>
