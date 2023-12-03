@@ -4,7 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,13 +20,19 @@ import androidx.compose.material.icons.rounded.CreateNewFolder
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Logout
+import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
@@ -35,6 +44,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,6 +73,7 @@ import app.capstone.rasaku.ui.screen.searchinput.SearchInputScreen
 import app.capstone.rasaku.ui.screen.searchresult.SearchResultScreen
 import app.capstone.rasaku.ui.theme.RasakuTheme
 import coil.compose.AsyncImage
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,9 +85,111 @@ fun RasakuApp(
     val currentRoute = navBackStackEntry?.destination?.route
     val routeWithoutBottomBar = arrayOf(Screen.Camera.route)
     val navDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
-        drawerContent = {},
+        drawerContent = {
+            when (currentRoute) {
+                Screen.Home.route,
+                Screen.Search.route,
+                Screen.SearchResult.route -> ModalDrawerSheet {
+                    Box(
+                        contentAlignment = Alignment.BottomStart,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(208.dp)
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(18.dp),
+                            modifier = modifier.padding(24.dp)
+                        ) {
+                            AsyncImage(
+                                model = "https://placehold.co/84x84/png",
+                                contentDescription = null,
+                                placeholder = painterResource(id = R.drawable.img_placeholder),
+                                contentScale = ContentScale.Crop,
+                                modifier = modifier
+                                    .size(84.dp)
+                                    .clip(CircleShape)
+                            )
+                            Text(
+                                text = "User's Name",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            )
+                        }
+                    }
+                    ListItem(
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Rounded.Person,
+                                contentDescription = null,
+                            )
+                        },
+                        headlineContent = {
+                            Text(
+                                text = "Akun",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        modifier = modifier.clickable {
+                            // TODO
+                        }
+                    )
+                    ListItem(
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Rounded.Palette,
+                                contentDescription = null,
+                            )
+                        },
+                        headlineContent = {
+                            Text(
+                                text = "Tema",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        modifier = modifier.clickable {
+                            // TODO
+                        }
+                    )
+                    ListItem(
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Rounded.Info,
+                                contentDescription = null,
+                            )
+                        },
+                        headlineContent = {
+                            Text(
+                                text = "Tentang",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        modifier = modifier.clickable {
+                            // TODO
+                        }
+                    )
+                    Spacer(modifier = modifier.fillMaxHeight(.8f))
+                    ListItem(
+                        leadingContent = {
+                            Icon(imageVector = Icons.Rounded.Logout, contentDescription = null)
+                        },
+                        headlineContent = {
+                            Text(
+                                text = "Keluar",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        modifier = Modifier
+                            .clickable {
+                                // TODO
+                            }
+                    )
+                }
+            }
+        },
         drawerState = navDrawerState
     ) {
         Scaffold(
@@ -88,13 +201,18 @@ fun RasakuApp(
                     Screen.SearchResult.route -> Header(
                         imageUrl = "https://placehold.co/48x48/png",
                         navigateToSearchInput = { navController.navigate(Screen.SearchInput.route) },
-                        openNavigationDrawer = {/* TODO: Open navigation drawer */ },
+                        profileOnClick = {
+                            // TODO: Check user already login or not
+                            scope.launch {
+                                navDrawerState.open()
+                            }
+                        },
                     )
 
                     Screen.Camera.route -> TopAppBar(
                         title = {
                             Text(
-                                text = "Makanan Apa Ini?",
+                                text = stringResource(R.string.what_is_this_food),
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = modifier.padding(horizontal = 8.dp)
                             )
@@ -115,7 +233,7 @@ fun RasakuApp(
                     Screen.Favorite.route -> TopAppBar(
                         title = {
                             Text(
-                                text = "Favorit",
+                                text = stringResource(R.string.favorite),
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = modifier.padding(horizontal = 16.dp)
                             )
@@ -154,7 +272,7 @@ fun RasakuApp(
                     Screen.FavoriteList.route -> TopAppBar(
                         title = {
                             Text(
-                                text = "Daftar Makanan",
+                                text = stringResource(R.string.food_list),
                                 style = MaterialTheme.typography.titleLarge,
                                 modifier = modifier.padding(horizontal = 8.dp)
                             )
@@ -169,7 +287,7 @@ fun RasakuApp(
                                         navController.navigateUp()
                                     }
                             )
-                    })
+                        })
                 }
             },
             bottomBar = {
@@ -189,11 +307,13 @@ fun RasakuApp(
                     SearchScreen()
                 }
                 composable(Screen.Camera.route) { CameraScreen() }
-                composable(Screen.Favorite.route) { FavoriteScreen(
-                    navigateToFavoriteList = {id ->
-                        navController.navigate(Screen.FavoriteList.createRoute(id))
-                    }
-                ) }
+                composable(Screen.Favorite.route) {
+                    FavoriteScreen(
+                        navigateToFavoriteList = { id ->
+                            navController.navigate(Screen.FavoriteList.createRoute(id))
+                        }
+                    )
+                }
                 composable(Screen.History.route) { HistoryScreen() }
                 composable(Screen.SearchInput.route) {}
                 composable(
@@ -274,7 +394,7 @@ private fun BottomBar(
 private fun Header(
     imageUrl: String,
     navigateToSearchInput: () -> Unit,
-    openNavigationDrawer: () -> Unit,
+    profileOnClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
@@ -292,7 +412,7 @@ private fun Header(
                         .size(48.dp)
                         .clip(CircleShape)
                         .clickable {
-                            openNavigationDrawer
+                            profileOnClick()
                         }
                 )
                 Box(
@@ -324,7 +444,7 @@ private fun HeaderPreview() {
         Header(
             imageUrl = "",
             navigateToSearchInput = {},
-            openNavigationDrawer = {},
+            profileOnClick = {},
         )
     }
 }

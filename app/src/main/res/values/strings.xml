@@ -2,4 +2,7 @@
     <string name="app_name">Rasaku</string>
     <string name="search_food">Cari makanan...</string>
     <string name="history">Riwayat</string>
+    <string name="what_is_this_food">Makanan Apa Ini?</string>
+    <string name="favorite">Favorit</string>
+    <string name="food_list">Daftar Makanan</string>
 </resources>
