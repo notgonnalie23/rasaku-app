@@ -10,5 +10,8 @@ sealed class Screen(val route: String) {
     object SearchResult : Screen("search/query/{query}"){
         fun createRoute(query: String) = "search/query/$query"
     }
+    object FavoriteList : Screen("favorite/{id}"){
+        fun createRoute(id: Long) = "favorite/$id"
+    }
 
 }

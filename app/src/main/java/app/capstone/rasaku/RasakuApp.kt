@@ -55,6 +55,7 @@ import app.capstone.rasaku.navigation.NavigationItem
 import app.capstone.rasaku.navigation.Screen
 import app.capstone.rasaku.ui.screen.camera.CameraScreen
 import app.capstone.rasaku.ui.screen.favorite.FavoriteScreen
+import app.capstone.rasaku.ui.screen.favoritelist.FavoriteListScreen
 import app.capstone.rasaku.ui.screen.history.HistoryScreen
 import app.capstone.rasaku.ui.screen.home.HomeScreen
 import app.capstone.rasaku.ui.screen.search.SearchScreen
@@ -105,8 +106,8 @@ fun RasakuApp(
                                 modifier = Modifier
                                     .padding(start = 16.dp)
                                     .clickable {
-                                    navController.navigateUp()
-                                }
+                                        navController.navigateUp()
+                                    }
                             )
                         }
                     )
@@ -126,8 +127,8 @@ fun RasakuApp(
                                 modifier = Modifier
                                     .padding(end = 24.dp)
                                     .clickable {
-                                    //                                TODO: Open bottom sheet
-                                }
+                                        // TODO: Open bottom sheet
+                                    }
                             )
                         }
 
@@ -149,6 +150,26 @@ fun RasakuApp(
                             navController.navigate(Screen.SearchResult.createRoute(query))
                         }
                     )
+
+                    Screen.FavoriteList.route -> TopAppBar(
+                        title = {
+                            Text(
+                                text = "Daftar Makanan",
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = modifier.padding(horizontal = 8.dp)
+                            )
+                        },
+                        navigationIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.ArrowBack,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(start = 16.dp)
+                                    .clickable {
+                                        navController.navigateUp()
+                                    }
+                            )
+                    })
                 }
             },
             bottomBar = {
@@ -168,7 +189,11 @@ fun RasakuApp(
                     SearchScreen()
                 }
                 composable(Screen.Camera.route) { CameraScreen() }
-                composable(Screen.Favorite.route) { FavoriteScreen() }
+                composable(Screen.Favorite.route) { FavoriteScreen(
+                    navigateToFavoriteList = {id ->
+                        navController.navigate(Screen.FavoriteList.createRoute(id))
+                    }
+                ) }
                 composable(Screen.History.route) { HistoryScreen() }
                 composable(Screen.SearchInput.route) {}
                 composable(
@@ -178,6 +203,15 @@ fun RasakuApp(
                     val query = it.arguments?.getString("query") ?: ""
                     SearchResultScreen(
                         query = query,
+                    )
+                }
+                composable(
+                    route = Screen.FavoriteList.route,
+                    arguments = listOf(navArgument("id") { type = NavType.LongType })
+                ) {
+                    val id = it.arguments?.getLong("id") ?: -1L
+                    FavoriteListScreen(
+                        id = id,
                     )
                 }
             }

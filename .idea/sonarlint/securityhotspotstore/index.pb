@@ -32,11 +32,11 @@ Fapp/src/main/java/app/capstone/rasaku/ui/screen/camera/CameraScreen.kt,5\1\51a
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-l
-<app/src/main/java/app/capstone/rasaku/ui/component/Header.kt,6\8\683b9fd12a69ca2c4d2e0677fcb4228e5e171955
 €
 Papp/src/main/java/app/capstone/rasaku/ui/screen/searchinput/SearchInputScreen.kt,4\9\49b8129313ce7d382d94a4a4d8383fb2cf60e54c
 ‚
 Rapp/src/main/java/app/capstone/rasaku/ui/screen/searchresult/SearchResultScreen.kt,d\a\dab0055d5311527a657292f37e289c007cd2f3ff
 d
 4app/src/main/java/app/capstone/rasaku/utils/Utils.kt,d\6\d67410cd179fca5bea7fd70d011882053497cbb5
+u
+Eapp/src/main/java/app/capstone/rasaku/ui/component/CategorySection.kt,a\b\ab8e57c6096b545dcf08d5b1c5e8ced34e54ab6c

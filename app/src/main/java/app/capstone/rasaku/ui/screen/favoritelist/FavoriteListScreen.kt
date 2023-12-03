@@ -1,4 +1,4 @@
-package app.capstone.rasaku.ui.screen.favorite
+package app.capstone.rasaku.ui.screen.favoritelist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -19,19 +19,15 @@ import app.capstone.rasaku.ui.theme.RasakuTheme
 import coil.compose.AsyncImage
 
 @Composable
-fun FavoriteScreen(
-    navigateToFavoriteList : (Long) -> Unit,
+fun FavoriteListScreen(
+    id: Long,
     modifier : Modifier = Modifier
 ){
-    FavoriteContent(
-        navigateToFavoriteList = navigateToFavoriteList,
-        modifier = modifier
-    )
+    FavoriteListContent(modifier = modifier)
 }
 
 @Composable
-private fun FavoriteContent(
-    navigateToFavoriteList : (Long) -> Unit,
+private fun FavoriteListContent(
     modifier: Modifier,
 ) {
     LazyColumn {
@@ -39,7 +35,7 @@ private fun FavoriteContent(
             ListItem(
                 headlineContent = {
                     Text(
-                        text = "Folder #$index",
+                        text = "Food #$index",
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 },
@@ -55,7 +51,7 @@ private fun FavoriteContent(
                     )
                 },
                 modifier = Modifier.clickable {
-                    navigateToFavoriteList(index.toLong())
+//                        TODO: Navigasi ke halaman detail
                 }
             )
             Divider()
@@ -65,6 +61,6 @@ private fun FavoriteContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun FavoriteScreenPreview(){
-    RasakuTheme { FavoriteScreen({})}
+private fun FavoriteListScreenPreview(){
+    RasakuTheme { FavoriteListScreen(0)}
 }
