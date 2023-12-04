@@ -40,3 +40,5 @@ d
 4app/src/main/java/app/capstone/rasaku/utils/Utils.kt,d\6\d67410cd179fca5bea7fd70d011882053497cbb5
 u
 Eapp/src/main/java/app/capstone/rasaku/ui/component/CategorySection.kt,a\b\ab8e57c6096b545dcf08d5b1c5e8ced34e54ab6c
+‚
+Rapp/src/main/java/app/capstone/rasaku/ui/screen/favoritelist/FavoriteListScreen.kt,3\9\391a1719376d1aad1ddaebdd2e7f0cca571bf163
