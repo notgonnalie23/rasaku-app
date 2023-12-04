@@ -42,3 +42,7 @@ u
 Eapp/src/main/java/app/capstone/rasaku/ui/component/CategorySection.kt,a\b\ab8e57c6096b545dcf08d5b1c5e8ced34e54ab6c
 ‚
 Rapp/src/main/java/app/capstone/rasaku/ui/screen/favoritelist/FavoriteListScreen.kt,3\9\391a1719376d1aad1ddaebdd2e7f0cca571bf163
+s
+Capp/src/main/java/app/capstone/rasaku/ui/component/CameraPreview.kt,b\9\b9434288de667f494246ef33a93d58f834794c69
+{
+Kapp/src/main/java/app/capstone/rasaku/ui/component/TransparentClipLayout.kt,0\6\06977ba09918fa545b5fab2d65f08825a9fd796b
