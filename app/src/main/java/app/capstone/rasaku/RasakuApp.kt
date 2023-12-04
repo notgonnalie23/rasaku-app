@@ -5,15 +5,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.CreateNewFolder
@@ -26,25 +31,31 @@ import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -75,7 +86,7 @@ import app.capstone.rasaku.ui.theme.RasakuTheme
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun RasakuApp(
     modifier: Modifier = Modifier,
@@ -84,7 +95,15 @@ fun RasakuApp(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val routeWithoutBottomBar = arrayOf(Screen.Camera.route)
-    val navDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val sheetState = rememberModalBottomSheetState()
+    var isSheetOpen by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var folderName by rememberSaveable {
+        mutableStateOf("")
+    }
+
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
@@ -188,12 +207,63 @@ fun RasakuApp(
                             }
                     )
                 }
+
+                Screen.Favorite.route -> if (isSheetOpen) {
+                    ModalBottomSheet(
+                        sheetState = sheetState,
+                        onDismissRequest = {
+                            folderName = ""
+                            isSheetOpen = false
+                        },
+                        modifier = if (WindowInsets.isImeVisible) modifier.fillMaxSize() else modifier
+                    ) {
+                        Text(
+                            text = "Buat koleksi favorit",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = modifier
+                                .padding(top = 24.dp, start = 32.dp, end = 32.dp, bottom = 12.dp),
+                        )
+                        TextField(
+                            value = folderName,
+                            onValueChange = { folderName = it },
+                            label = {
+                                Text(
+                                    text = "Masukkan nama folder"
+                                )
+                            },
+                            singleLine = true,
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    folderName = ""
+                                    isSheetOpen = false
+                                    // TODO: Save folder to database
+                                }
+                            ),
+                            modifier = modifier
+                                .padding(horizontal = 32.dp)
+                                .fillMaxWidth()
+                        )
+                        Button(
+                            onClick = {
+                                folderName = ""
+                                isSheetOpen = false
+                                // TODO: Save folder to database
+                            },
+                            modifier = modifier
+                                .padding(32.dp)
+                                .fillMaxWidth(),
+                        ) {
+                            Text(
+                                text = "Konfirmasi"
+                            )
+                        }
+                    }
+                }
             }
         },
-        drawerState = navDrawerState
+        drawerState = drawerState
     ) {
         Scaffold(
-            contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
             topBar = {
                 when (currentRoute) {
                     Screen.Home.route,
@@ -204,7 +274,7 @@ fun RasakuApp(
                         profileOnClick = {
                             // TODO: Check user already login or not
                             scope.launch {
-                                navDrawerState.open()
+                                drawerState.open()
                             }
                         },
                     )
@@ -245,7 +315,9 @@ fun RasakuApp(
                                 modifier = Modifier
                                     .padding(end = 24.dp)
                                     .clickable {
-                                        // TODO: Open bottom sheet
+                                        scope.launch {
+                                            isSheetOpen = true
+                                        }
                                     }
                             )
                         }
