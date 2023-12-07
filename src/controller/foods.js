@@ -38,4 +38,5 @@ const getIdFoods = async (req, res) => {
 module.exports = {
     getAllFoods,
     getIdFoods,
+    
 }

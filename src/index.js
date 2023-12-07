@@ -5,6 +5,7 @@ const app = express();
 const foodRoutes = require('./routes/foods')
 const middlewareLog = require('./middleware/log')
 
+
 app.use(middlewareLog)
 app.use(express.json())
 

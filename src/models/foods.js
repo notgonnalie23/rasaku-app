@@ -13,4 +13,5 @@ const getIdFoods = (id_food) => {
 module.exports = {
     getAllFoods,
     getIdFoods,
+    addFood
 }
