@@ -1,0 +1,4 @@
+runtime: nodejs20
+service: default
+beta_settings:
+  cloud_sql_instances: rasaku-app-407202:asia-southeast2:dbfoodsql
