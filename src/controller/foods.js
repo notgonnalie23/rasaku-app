@@ -1,4 +1,4 @@
-const foodModel = require('../models/foods')
+const foodModel = require('../models/foods');
 
 const getAllFoods = async (req, res) => {
     try {
@@ -12,9 +12,9 @@ const getAllFoods = async (req, res) => {
         res.status(500).json({
             message: 'server error',
             serverMessage: err
-        })
-    }
-}
+        });
+    };
+};
 
 const getIdFoods = async (req, res) => {
     const {id_food} = req.params
@@ -26,17 +26,16 @@ const getIdFoods = async (req, res) => {
                 data,
                 id_food
             }
-        })
+        });
     } catch (err) {
         res.status(500).json({
             message: 'server error',
             serverMessage: err
-        })
-    }
-}
+        });
+    };
+};
 
 module.exports = {
     getAllFoods,
-    getIdFoods,
-    
-}
+    getIdFoods, 
+};
