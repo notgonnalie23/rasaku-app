@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const conn = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
@@ -7,4 +7,4 @@ const conn = mysql.createConnection({
   socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`
 });
 
-module.exports = conn.promise();
+module.exports = pool.promise();
