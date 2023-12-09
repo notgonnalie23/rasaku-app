@@ -1,25 +1,21 @@
 {
-  "name": "rasaku-app",
+  "name": "gmaps-api",
   "version": "1.0.0",
-  "description": "backend for rasaku-app",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/notgonnalie23/rasaku-app.git"
   },
-  "author": "Iqbal Saputra & Kristianto",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/notgonnalie23/rasaku-app/issues"
-  },
-  "homepage": "https://github.com/notgonnalie23/rasaku-app#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "mysql2": "^3.6.5",
-    "nodemon": "^3.0.1"
+    "node-fetch": "^2.7.0",
+    "nodemon": "^3.0.2"
   }
 }
