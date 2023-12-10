@@ -1,4 +1,4 @@
-package app.capstone.rasaku.navigation
+package app.capstone.rasaku.ui.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

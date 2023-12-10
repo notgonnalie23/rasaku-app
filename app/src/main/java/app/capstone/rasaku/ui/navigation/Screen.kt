@@ -1,4 +1,4 @@
-package app.capstone.rasaku.navigation
+package app.capstone.rasaku.ui.navigation
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")

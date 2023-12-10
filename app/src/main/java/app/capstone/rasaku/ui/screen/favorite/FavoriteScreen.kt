@@ -1,70 +1,70 @@
 package app.capstone.rasaku.ui.screen.favorite
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import app.capstone.rasaku.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import app.capstone.rasaku.model.Favorite
+import app.capstone.rasaku.ui.ViewModelFactory
+import app.capstone.rasaku.ui.common.UiState
+import app.capstone.rasaku.ui.component.EmptyView
+import app.capstone.rasaku.ui.component.ListComponent
 import app.capstone.rasaku.ui.theme.RasakuTheme
-import coil.compose.AsyncImage
 
 @Composable
 fun FavoriteScreen(
-    navigateToFavoriteList : (Long) -> Unit,
-    modifier : Modifier = Modifier
-){
-    FavoriteContent(
-        navigateToFavoriteList = navigateToFavoriteList,
-        modifier = modifier
+    navigateToFavoriteList: (Long) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val viewModel: FavoriteViewModel = viewModel(
+        factory = ViewModelFactory.getInstance(LocalContext.current)
     )
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (uiState) {
+        is UiState.Loading -> viewModel.getFavorites()
+
+        is UiState.Success ->
+            FavoriteContent(
+                favorites = (uiState as UiState.Success<FavoriteState>).data.favorites,
+                navigateToFavoriteList = navigateToFavoriteList,
+                modifier = modifier
+            )
+
+        is UiState.Error ->
+            EmptyView(message = (uiState as UiState.Error).errorMessage)
+    }
 }
 
 @Composable
 private fun FavoriteContent(
-    navigateToFavoriteList : (Long) -> Unit,
-    modifier: Modifier,
+    favorites: List<Favorite>,
+    navigateToFavoriteList: (Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    LazyColumn {
-        items(12) { index ->
-            ListItem(
-                headlineContent = {
-                    Text(
-                        text = "Folder #$index",
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                },
-                leadingContent = {
-                    AsyncImage(
-                        model = "https://placehold.co/56x56/png",
-                        contentDescription = null,
-                        placeholder = painterResource(id = R.drawable.img_placeholder),
-                        contentScale = ContentScale.Crop,
-                        modifier = modifier
-                            .padding(start = 24.dp)
-                            .size(56.dp)
-                    )
-                },
-                modifier = Modifier.clickable {
-                    navigateToFavoriteList(index.toLong())
-                }
-            )
-            Divider()
+    if (favorites.isNotEmpty())
+        LazyColumn {
+            items(favorites) { data ->
+                ListComponent(
+                    id = data.id,
+                    title = data.name,
+                    onClick = navigateToFavoriteList,
+                    imageUrl = data.imageUrl,
+                    modifier = modifier
+                )
+            }
         }
-    }
+    else EmptyView(message = "Belum ada makanan favorit.")
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun FavoriteScreenPreview(){
-    RasakuTheme { FavoriteScreen({})}
+private fun FavoriteScreenPreview() {
+    RasakuTheme { FavoriteScreen({}) }
 }

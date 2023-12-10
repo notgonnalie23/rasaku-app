@@ -60,10 +60,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -72,8 +74,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import app.capstone.rasaku.navigation.NavigationItem
-import app.capstone.rasaku.navigation.Screen
+import app.capstone.rasaku.model.Favorite
+import app.capstone.rasaku.ui.ViewModelFactory
+import app.capstone.rasaku.ui.navigation.NavigationItem
+import app.capstone.rasaku.ui.navigation.Screen
 import app.capstone.rasaku.ui.screen.camera.CameraScreen
 import app.capstone.rasaku.ui.screen.favorite.FavoriteScreen
 import app.capstone.rasaku.ui.screen.favoritelist.FavoriteListScreen
@@ -92,6 +96,9 @@ fun RasakuApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
+    val viewModel : MainViewModel = viewModel(
+        factory = ViewModelFactory.getInstance(LocalContext.current)
+    )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val routeWithoutBottomBar = arrayOf(Screen.Camera.route)
@@ -234,9 +241,12 @@ fun RasakuApp(
                             singleLine = true,
                             keyboardActions = KeyboardActions(
                                 onDone = {
+                                    // TODO: Save folder to database
+                                    val favorite = Favorite(name = folderName)
+                                    viewModel.insertFavorite(favorite)
+
                                     folderName = ""
                                     isSheetOpen = false
-                                    // TODO: Save folder to database
                                 }
                             ),
                             modifier = modifier
@@ -245,9 +255,12 @@ fun RasakuApp(
                         )
                         Button(
                             onClick = {
+                                // TODO: Save folder to database
+                                val favorite = Favorite(name = folderName)
+                                viewModel.insertFavorite(favorite)
+
                                 folderName = ""
                                 isSheetOpen = false
-                                // TODO: Save folder to database
                             },
                             modifier = modifier
                                 .padding(32.dp)

@@ -19,7 +19,6 @@ fun TransparentClipLayout(
     modifier: Modifier = Modifier,
 ) {
 
-    val offsetInPx: Float
     val widthInPx: Float
     val heightInPx: Float
 
