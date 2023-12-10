@@ -7,6 +7,7 @@ import app.capstone.rasaku.MainViewModel
 import app.capstone.rasaku.data.Repository
 import app.capstone.rasaku.di.Injection
 import app.capstone.rasaku.ui.screen.favorite.FavoriteViewModel
+import app.capstone.rasaku.ui.screen.favoritelist.FavoriteListViewModel
 
 class ViewModelFactory(private val repository: Repository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -19,6 +20,10 @@ class ViewModelFactory(private val repository: Repository) :
 
             modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
                 FavoriteViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(FavoriteListViewModel::class.java) -> {
+                FavoriteListViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

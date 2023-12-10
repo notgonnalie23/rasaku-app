@@ -49,7 +49,7 @@ fun ListComponent(
                 Image(
                     painter = painterResource(id = R.drawable.img_placeholder),
                     contentDescription = title,
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Crop,
                     modifier = imageModifier
                 )
             }

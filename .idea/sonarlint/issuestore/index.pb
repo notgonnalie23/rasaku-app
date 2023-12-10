@@ -13,10 +13,6 @@ g
 7app/src/main/java/app/capstone/rasaku/ui/theme/Theme.kt,a\c\acaa9a56baa56817a183df6a941ce13fcb7f4570
 e
 5app/src/main/java/app/capstone/rasaku/MainActivity.kt,0\0\0020a9b4f9b7cec9da60ac2d4ce17120203c9d1d
-j
-:app/src/main/java/app/capstone/rasaku/navigation/Screen.kt,8\8\88a7e9234c11520c7e02d5622567c47ff99031f8
-r
-Bapp/src/main/java/app/capstone/rasaku/navigation/NavigationItem.kt,0\d\0dace7ee2f7e54972cc915657f1dbaf154b4c87c
 n
 >app/src/main/java/app/capstone/rasaku/ui/component/FoodCard.kt,e\0\e072f236925eeab510998e7ef0c85587d3d70d4f
 r
@@ -72,3 +68,13 @@ g
 7app/src/main/java/app/capstone/rasaku/model/Favorite.kt,c\3\c3efe7b52ba74b0df3a1da935966c6ddb9bc8881
 o
 ?app/src/main/java/app/capstone/rasaku/ui/component/EmptyView.kt,3\5\35ac21c6c5c3b92df28d0053b25e3773d1548762
+y
+Iapp/src/main/java/app/capstone/rasaku/ui/screen/favorite/FavoriteState.kt,2\8\284c40800e09a78d896b717cee463a97c48d10e5
+n
+>app/src/main/java/app/capstone/rasaku/ui/component/ListItem.kt,f\e\fe0a4c584b0b42c5e0f2cb6bbe189cd705917e34
+C
+hs_err_pid25648.log,8\6\8601564a97bd2776754780e3a9266b4a2153b50c
+…
+Uapp/src/main/java/app/capstone/rasaku/ui/screen/favoritelist/FavoriteListViewModel.kt,6\b\6b86e744acbb59a0fb98e202ee4ffcabe57c0f5d
+o
+?app/src/main/java/app/capstone/rasaku/ui/component/DialogBox.kt,a\e\ae845c0ceb5bff6341ef1e1c35dfbf5ad8caba7c

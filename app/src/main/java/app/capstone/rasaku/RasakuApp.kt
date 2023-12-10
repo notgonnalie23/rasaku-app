@@ -96,7 +96,7 @@ fun RasakuApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
-    val viewModel : MainViewModel = viewModel(
+    val viewModel: MainViewModel = viewModel(
         factory = ViewModelFactory.getInstance(LocalContext.current)
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -417,6 +417,8 @@ fun RasakuApp(
                     val id = it.arguments?.getLong("id") ?: -1L
                     FavoriteListScreen(
                         id = id,
+                        navigateToBack = { navController.navigateUp() },
+                        navigateToDetail = { /* TODO : Ke halaman detail */ },
                     )
                 }
             }
@@ -461,9 +463,7 @@ private fun BottomBar(
                 selected = currentRoute == item.screen.route,
                 onClick = {
                     navController.navigate(item.screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
+                        popUpTo(navController.graph.findStartDestination().id)
                         restoreState = true
                         launchSingleTop = true
                     }

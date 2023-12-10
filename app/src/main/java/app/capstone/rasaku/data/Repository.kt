@@ -15,7 +15,7 @@ class Repository private constructor(
 
     suspend fun updateFavorite(favorite: Favorite) = database.favoriteDao().updateFavorite(favorite)
 
-    suspend fun deleteFavorite(favorite: Favorite) = database.favoriteDao().deleteFavorite(favorite)
+    suspend fun deleteFavorite(id: Long) = database.favoriteDao().deleteFavoriteById(id)
 
     companion object {
         @Volatile

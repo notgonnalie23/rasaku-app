@@ -22,5 +22,5 @@ interface FavoriteDao {
     suspend fun updateFavorite(favorite: Favorite)
 
     @Query("DELETE FROM favorite WHERE id = :id")
-    suspend fun deleteFavorite(id: Long)
+    suspend fun deleteFavoriteById(id: Long)
 }
