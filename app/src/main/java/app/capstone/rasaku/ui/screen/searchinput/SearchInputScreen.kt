@@ -12,12 +12,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -48,6 +51,7 @@ private fun SearchInputContent(
     modifier: Modifier = Modifier,
 ) {
     var query by remember { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
     val histories = remember {
         mutableStateListOf(
             "Food #1",
@@ -57,6 +61,7 @@ private fun SearchInputContent(
     }
 
     SearchBar(
+        modifier = modifier.focusRequester(focusRequester),
         query = query,
         onQueryChange = { query = it },
         onSearch = { navigateToSearchResult(query) },
@@ -114,6 +119,10 @@ private fun SearchInputContent(
                 )
             }
         }
+    }
+    
+    LaunchedEffect(Unit){
+        focusRequester.requestFocus()
     }
 }
 
