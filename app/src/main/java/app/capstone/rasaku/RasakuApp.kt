@@ -99,9 +99,17 @@ fun RasakuApp(
     val viewModel: MainViewModel = viewModel(
         factory = ViewModelFactory.getInstance(LocalContext.current)
     )
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val routeWithoutBottomBar = arrayOf(Screen.Camera.route)
+
+    val screenWithoutBottomBar = arrayOf(
+        Screen.Camera.route,
+        Screen.SearchInput.route,
+        Screen.SearchResult.route,
+        Screen.FavoriteList.route,
+    )
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val sheetState = rememberModalBottomSheetState()
     var isSheetOpen by rememberSaveable {
@@ -110,7 +118,6 @@ fun RasakuApp(
     var collectionName by rememberSaveable {
         mutableStateOf("")
     }
-
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
@@ -376,7 +383,7 @@ fun RasakuApp(
                 }
             },
             bottomBar = {
-                if (currentRoute !in routeWithoutBottomBar) BottomBar(navController)
+                if (currentRoute !in screenWithoutBottomBar) BottomBar(navController)
             },
             modifier = modifier
         ) { innerPadding ->
