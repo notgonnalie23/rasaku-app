@@ -17,4 +17,6 @@ data class Favorite(
     @ColumnInfo(name = "image_url")
     val imageUrl: String? = null,
 
+    @ColumnInfo(name = "food_count")
+    val foodCount : Int = 0
 )
