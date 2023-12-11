@@ -9,8 +9,10 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +52,7 @@ private fun FavoriteListContent(
     navigateToDetail: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var isShowDialog = remember { mutableStateOf(false) }
+    var isShowDialog by remember { mutableStateOf(false) }
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -59,7 +61,6 @@ private fun FavoriteListContent(
             items(12) { index ->
                 ListComponent(
                     title = "Food #$index",
-                    id = 0,
                     imageUrl = "https://placehold.co/56x56/png",
                     onClick = {
                         // TODO : Ke halaman detail
@@ -70,7 +71,7 @@ private fun FavoriteListContent(
         }
         FloatingActionButton(
             onClick = {
-                isShowDialog.value = true
+                isShowDialog = true
             },
             modifier = modifier
                 .align(Alignment.BottomEnd)
@@ -81,7 +82,7 @@ private fun FavoriteListContent(
                 contentDescription = null
             )
         }
-        if (isShowDialog.value)
+        if (isShowDialog)
             ModalDialog(
                 title = "Hapus Koleksi Makanan",
                 body = "Apakah anda yakin ingin menghapus koleksi ini?",
@@ -89,13 +90,13 @@ private fun FavoriteListContent(
                 negative = "Batalkan",
                 onPositiveClick = {
                     delete(id)
-                    isShowDialog.value = false
+                    isShowDialog = false
                 },
                 onNegativeClick = {
-                    isShowDialog.value = false
+                    isShowDialog = false
                 },
                 setShowDialog = {
-                    isShowDialog.value = it
+                    isShowDialog = it
                 }
             )
     }
