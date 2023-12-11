@@ -1,8 +1,11 @@
 package app.capstone.rasaku.ui.screen.favoritelist
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeGestures
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
@@ -77,7 +80,8 @@ private fun FavoriteListContent(
             },
             modifier = modifier
                 .align(Alignment.BottomEnd)
-                .padding(8.dp)
+                .windowInsetsPadding(WindowInsets.safeGestures)
+                .padding(horizontal = 16.dp)
         ) {
             Icon(
                 imageVector = Icons.Rounded.Delete,
