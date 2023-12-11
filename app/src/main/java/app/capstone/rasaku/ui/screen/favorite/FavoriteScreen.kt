@@ -1,9 +1,14 @@
 package app.capstone.rasaku.ui.screen.favorite
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,6 +19,7 @@ import app.capstone.rasaku.ui.ViewModelFactory
 import app.capstone.rasaku.ui.common.UiState
 import app.capstone.rasaku.ui.component.EmptyView
 import app.capstone.rasaku.ui.component.ListComponent
+import app.capstone.rasaku.ui.component.ModalDialog
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
 @Composable
@@ -33,7 +39,10 @@ fun FavoriteScreen(
         is UiState.Success ->
             FavoriteContent(
                 favorites = (uiState as UiState.Success<FavoriteState>).data.favorites,
-                navigateToFavoriteList = navigateToFavoriteList,
+                onClick = navigateToFavoriteList,
+                delete = {
+                    viewModel.deleteFavorite(it)
+                },
                 modifier = modifier
             )
 
@@ -45,22 +54,50 @@ fun FavoriteScreen(
 @Composable
 private fun FavoriteContent(
     favorites: List<Favorite>,
-    navigateToFavoriteList: (Long) -> Unit,
+    onClick: (Long) -> Unit,
+    delete: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var isShowDialog by remember { mutableStateOf(false) }
+    var selectedId by remember { mutableLongStateOf(0) }
+    var selectedName by remember { mutableStateOf("")}
+
     if (favorites.isNotEmpty())
-        LazyColumn {
-            items(favorites) { data ->
-                ListComponent(
-                    id = data.id,
-                    title = data.name,
-                    onClick = navigateToFavoriteList,
-                    imageUrl = data.imageUrl,
-                    modifier = modifier
-                )
+        Box {
+            LazyColumn {
+                items(favorites) { data ->
+                    ListComponent(
+                        title = data.name,
+                        body = "${data.foodCount} menu",
+                        onClick = { onClick(data.id) },
+                        onHold = {
+                            selectedId = data.id
+                            selectedName = data.name
+                            isShowDialog = true
+                        },
+                        imageUrl = data.imageUrl,
+                        modifier = modifier
+                    )
+                }
             }
+            if (isShowDialog)
+                ModalDialog(
+                    title = "Hapus Koleksi Makanan",
+                    body = "Apakah anda yakin ingin menghapus $selectedName?",
+                    positive = "Hapus",
+                    negative = "Batalkan",
+                    onPositiveClick = {
+                        delete(selectedId)
+                    },
+                    onNegativeClick = {
+                        isShowDialog = false
+                    },
+                    setShowDialog = {
+                        isShowDialog = it
+                    }
+                )
         }
-    else EmptyView(message = "Belum ada makanan favorit.")
+    else EmptyView(message = "Anda belum mempunyai koleksi favorit.")
 }
 
 @Preview(showBackground = true)
