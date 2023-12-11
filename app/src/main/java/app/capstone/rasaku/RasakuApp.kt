@@ -107,7 +107,7 @@ fun RasakuApp(
     var isSheetOpen by rememberSaveable {
         mutableStateOf(false)
     }
-    var folderName by rememberSaveable {
+    var collectionName by rememberSaveable {
         mutableStateOf("")
     }
 
@@ -140,7 +140,7 @@ fun RasakuApp(
                                     .clip(CircleShape)
                             )
                             Text(
-                                text = "User's Name",
+                                text = stringResource(R.string.username),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                             )
@@ -155,7 +155,7 @@ fun RasakuApp(
                         },
                         headlineContent = {
                             Text(
-                                text = "Akun",
+                                text = stringResource(R.string.account),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         },
@@ -172,7 +172,7 @@ fun RasakuApp(
                         },
                         headlineContent = {
                             Text(
-                                text = "Tema",
+                                text = stringResource(R.string.theme),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         },
@@ -189,7 +189,7 @@ fun RasakuApp(
                         },
                         headlineContent = {
                             Text(
-                                text = "Tentang",
+                                text = stringResource(R.string.about),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         },
@@ -204,7 +204,7 @@ fun RasakuApp(
                         },
                         headlineContent = {
                             Text(
-                                text = "Keluar",
+                                text = stringResource(R.string.logout),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         },
@@ -219,33 +219,33 @@ fun RasakuApp(
                     ModalBottomSheet(
                         sheetState = sheetState,
                         onDismissRequest = {
-                            folderName = ""
+                            collectionName = ""
                             isSheetOpen = false
                         },
                         modifier = if (WindowInsets.isImeVisible) modifier.fillMaxSize() else modifier
                     ) {
                         Text(
-                            text = "Buat koleksi favorit",
+                            text = stringResource(R.string.create_favorite_collection),
                             style = MaterialTheme.typography.titleLarge,
                             modifier = modifier
                                 .padding(top = 24.dp, start = 32.dp, end = 32.dp, bottom = 12.dp),
                         )
                         TextField(
-                            value = folderName,
-                            onValueChange = { folderName = it },
+                            value = collectionName,
+                            onValueChange = { collectionName = it },
                             label = {
                                 Text(
-                                    text = "Masukkan nama folder"
+                                    text = stringResource(R.string.enter_collection_name)
                                 )
                             },
                             singleLine = true,
                             keyboardActions = KeyboardActions(
                                 onDone = {
                                     // TODO: Save folder to database
-                                    val favorite = Favorite(name = folderName)
+                                    val favorite = Favorite(name = collectionName)
                                     viewModel.insertFavorite(favorite)
 
-                                    folderName = ""
+                                    collectionName = ""
                                     isSheetOpen = false
                                 }
                             ),
@@ -256,10 +256,10 @@ fun RasakuApp(
                         Button(
                             onClick = {
                                 // TODO: Save folder to database
-                                val favorite = Favorite(name = folderName)
+                                val favorite = Favorite(name = collectionName)
                                 viewModel.insertFavorite(favorite)
 
-                                folderName = ""
+                                collectionName = ""
                                 isSheetOpen = false
                             },
                             modifier = modifier
@@ -267,7 +267,7 @@ fun RasakuApp(
                                 .fillMaxWidth(),
                         ) {
                             Text(
-                                text = "Konfirmasi"
+                                text = stringResource(R.string.confirm)
                             )
                         }
                     }

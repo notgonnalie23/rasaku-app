@@ -29,9 +29,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import app.capstone.rasaku.R
 import app.capstone.rasaku.ui.component.CameraPreview
 import app.capstone.rasaku.ui.component.TransparentClipLayout
 
@@ -84,7 +86,7 @@ private fun CameraContent(
             )
 
             Text(
-                text = "Letakkan object makanan di tengah kamera, lalu scan untuk melihat untuk mengetahui makanan apa saja",
+                text = stringResource(R.string.info_take_picture),
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center,
                 color = Color.White,
@@ -113,7 +115,7 @@ private fun CameraContent(
                                     matrix,
                                     true
                                 )
-                                Log.d("Camera", "Camera taked a picture")
+                                Log.d("Camera", "Camera take a picture")
                             }
 
 

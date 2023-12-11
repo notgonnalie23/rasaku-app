@@ -16,9 +16,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.capstone.rasaku.R
 import app.capstone.rasaku.ui.ViewModelFactory
 import app.capstone.rasaku.ui.component.ListComponent
 import app.capstone.rasaku.ui.component.ModalDialog
@@ -84,10 +86,10 @@ private fun FavoriteListContent(
         }
         if (isShowDialog)
             ModalDialog(
-                title = "Hapus Koleksi Makanan",
-                body = "Apakah anda yakin ingin menghapus koleksi ini?",
-                positive = "Hapus",
-                negative = "Batalkan",
+                title = stringResource(R.string.delete_collection),
+                body = stringResource(R.string.alert_delete_this_collection),
+                positive = stringResource(R.string.delete),
+                negative = stringResource(R.string.cancel),
                 onPositiveClick = {
                     delete(id)
                     isShowDialog = false

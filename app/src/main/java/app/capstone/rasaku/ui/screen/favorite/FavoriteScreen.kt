@@ -11,9 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.capstone.rasaku.R
 import app.capstone.rasaku.model.Favorite
 import app.capstone.rasaku.ui.ViewModelFactory
 import app.capstone.rasaku.ui.common.UiState
@@ -68,7 +70,7 @@ private fun FavoriteContent(
                 items(favorites) { data ->
                     ListComponent(
                         title = data.name,
-                        body = "${data.foodCount} menu",
+                        body = stringResource(R.string.d_menu, data.foodCount),
                         onClick = { onClick(data.id) },
                         onHold = {
                             selectedId = data.id
@@ -82,10 +84,10 @@ private fun FavoriteContent(
             }
             if (isShowDialog)
                 ModalDialog(
-                    title = "Hapus Koleksi Makanan",
-                    body = "Apakah anda yakin ingin menghapus $selectedName?",
-                    positive = "Hapus",
-                    negative = "Batalkan",
+                    title = stringResource(R.string.delete_collection),
+                    body = stringResource(R.string.alert_delete_collection, selectedName),
+                    positive = stringResource(R.string.delete),
+                    negative = stringResource(R.string.cancel),
                     onPositiveClick = {
                         delete(selectedId)
                     },
@@ -97,7 +99,7 @@ private fun FavoriteContent(
                     }
                 )
         }
-    else EmptyView(message = "Anda belum mempunyai koleksi favorit.")
+    else EmptyView(message = stringResource(R.string.collections_unavailable))
 }
 
 @Preview(showBackground = true)
