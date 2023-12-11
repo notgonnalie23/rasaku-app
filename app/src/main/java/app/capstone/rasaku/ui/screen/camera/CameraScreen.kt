@@ -11,20 +11,20 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.safeGestures
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CameraAlt
-import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,14 +44,11 @@ fun CameraScreen(
     CameraContent(modifier = modifier)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CameraContent(
     modifier: Modifier,
 ) {
     val context: Context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
     val controller = remember {
         LifecycleCameraController(context).apply {
             setEnabledUseCases(
@@ -62,79 +59,69 @@ private fun CameraContent(
 
     controller.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-    BottomSheetScaffold(
-        scaffoldState = scaffoldState,
-        sheetPeekHeight = 0.dp,
-        sheetContent = {
-
-        }
+    Box(
+        modifier = modifier.fillMaxSize()
     ) {
-        Box(
+        CameraPreview(
+            controller = controller,
+            modifier = modifier.matchParentSize()
+        )
+
+        TransparentClipLayout(
+            width = 273.dp,
+            height = 412.dp,
+            modifier = modifier.matchParentSize()
+        )
+
+        Text(
+            text = stringResource(R.string.info_take_picture),
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center,
+            color = Color.White,
             modifier = modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            CameraPreview(
-                controller = controller,
-                modifier = modifier.fillMaxSize()
-            )
+                .align(Alignment.TopCenter)
+                .windowInsetsPadding(WindowInsets.safeContent)
+                .padding(horizontal = 32.dp)
+        )
 
-            TransparentClipLayout(
-                width = 273.dp,
-                height = 412.dp,
-                modifier = modifier.fillMaxSize()
-            )
+        FloatingActionButton(
+            onClick = {
+                controller.takePicture(
+                    ContextCompat.getMainExecutor(context),
+                    object : OnImageCapturedCallback() {
+                        override fun onCaptureSuccess(image: ImageProxy) {
+                            super.onCaptureSuccess(image)
 
-            Text(
-                text = stringResource(R.string.info_take_picture),
-                style = MaterialTheme.typography.labelMedium,
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                modifier = modifier
-                    .align(Alignment.TopCenter)
-                    .padding(24.dp)
-            )
-
-            FloatingActionButton(
-                onClick = {
-                    controller.takePicture(
-                        ContextCompat.getMainExecutor(context),
-                        object : OnImageCapturedCallback() {
-                            override fun onCaptureSuccess(image: ImageProxy) {
-                                super.onCaptureSuccess(image)
-
-                                val matrix = Matrix().apply {
-                                    postRotate(image.imageInfo.rotationDegrees.toFloat())
-                                }
-                                val rotatedBitmap = Bitmap.createBitmap(
-                                    image.toBitmap(),
-                                    0,
-                                    0,
-                                    image.width,
-                                    image.height,
-                                    matrix,
-                                    true
-                                )
-                                Log.d("Camera", "Camera take a picture")
+                            val matrix = Matrix().apply {
+                                postRotate(image.imageInfo.rotationDegrees.toFloat())
                             }
-
-
-                            override fun onError(exception: ImageCaptureException) {
-                                super.onError(exception)
-                                Log.e("Camera", "Couldn't take photo", exception)
-                            }
+                            val rotatedBitmap = Bitmap.createBitmap(
+                                image.toBitmap(),
+                                0,
+                                0,
+                                image.width,
+                                image.height,
+                                matrix,
+                                true
+                            )
+                            Log.d("Camera", "Camera take a picture")
                         }
-                    )
-                },
-                modifier = modifier
-                    .padding(36.dp)
-                    .align(Alignment.BottomCenter)
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.CameraAlt,
-                    contentDescription = null,
+
+                        override fun onError(exception: ImageCaptureException) {
+                            super.onError(exception)
+                            Log.e("Camera", "Couldn't take photo", exception)
+                        }
+                    }
                 )
-            }
+            },
+            modifier = modifier
+                .windowInsetsPadding(WindowInsets.safeGestures)
+                .align(Alignment.BottomCenter)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.CameraAlt,
+                contentDescription = null,
+            )
         }
     }
 }
