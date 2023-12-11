@@ -70,11 +70,11 @@ o
 ?app/src/main/java/app/capstone/rasaku/ui/component/EmptyView.kt,3\5\35ac21c6c5c3b92df28d0053b25e3773d1548762
 y
 Iapp/src/main/java/app/capstone/rasaku/ui/screen/favorite/FavoriteState.kt,2\8\284c40800e09a78d896b717cee463a97c48d10e5
-n
->app/src/main/java/app/capstone/rasaku/ui/component/ListItem.kt,f\e\fe0a4c584b0b42c5e0f2cb6bbe189cd705917e34
 C
 hs_err_pid25648.log,8\6\8601564a97bd2776754780e3a9266b4a2153b50c
 …
 Uapp/src/main/java/app/capstone/rasaku/ui/screen/favoritelist/FavoriteListViewModel.kt,6\b\6b86e744acbb59a0fb98e202ee4ffcabe57c0f5d
-o
-?app/src/main/java/app/capstone/rasaku/ui/component/DialogBox.kt,a\e\ae845c0ceb5bff6341ef1e1c35dfbf5ad8caba7c
+s
+Capp/src/main/java/app/capstone/rasaku/ui/component/ListComponent.kt,8\a\8aa2ae5807abef493f8ef0c7be5b0e85f14df0eb
+q
+Aapp/src/main/java/app/capstone/rasaku/ui/component/ModalDialog.kt,e\3\e3473647f33e0a26f8894496c2afcd5e41ec4375
