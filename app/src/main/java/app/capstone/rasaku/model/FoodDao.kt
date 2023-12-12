@@ -13,7 +13,10 @@ interface FoodDao {
      fun  getFoodById(id: Long): Food
 
     @Query("SELECT * FROM food WHERE favorite_id = :favoriteId")
-    suspend fun  getFoodByFavoriteId(favoriteId: Long): List<Food>
+    fun  getFoodByFavoriteId(favoriteId: Long): List<Food>
+
+    @Query("DELETE FROM food WHERE favorite_id = :favoriteId")
+    suspend fun  deleteFoodByFavoriteId(favoriteId: Long)
 
     @Update
     suspend fun  updateFood(food: Food)
