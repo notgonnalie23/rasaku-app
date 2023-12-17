@@ -39,14 +39,19 @@ import app.capstone.rasaku.ui.component.TransparentClipLayout
 
 @Composable
 fun CameraScreen(
-    modifier: Modifier = Modifier
+    navigateToDetail: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    CameraContent(modifier = modifier)
+    CameraContent(
+        navigateToDetail = navigateToDetail,
+        modifier = modifier,
+        )
 }
 
 @Composable
 private fun CameraContent(
-    modifier: Modifier,
+    navigateToDetail: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context: Context = LocalContext.current
     val controller = remember {
@@ -63,14 +68,11 @@ private fun CameraContent(
         modifier = modifier.fillMaxSize()
     ) {
         CameraPreview(
-            controller = controller,
-            modifier = modifier.matchParentSize()
+            controller = controller, modifier = modifier.matchParentSize()
         )
 
         TransparentClipLayout(
-            width = 273.dp,
-            height = 412.dp,
-            modifier = modifier.matchParentSize()
+            width = 273.dp, height = 412.dp, modifier = modifier.matchParentSize()
         )
 
         Text(
@@ -86,8 +88,7 @@ private fun CameraContent(
 
         FloatingActionButton(
             onClick = {
-                controller.takePicture(
-                    ContextCompat.getMainExecutor(context),
+                controller.takePicture(ContextCompat.getMainExecutor(context),
                     object : OnImageCapturedCallback() {
                         override fun onCaptureSuccess(image: ImageProxy) {
                             super.onCaptureSuccess(image)
@@ -96,14 +97,9 @@ private fun CameraContent(
                                 postRotate(image.imageInfo.rotationDegrees.toFloat())
                             }
                             val rotatedBitmap = Bitmap.createBitmap(
-                                image.toBitmap(),
-                                0,
-                                0,
-                                image.width,
-                                image.height,
-                                matrix,
-                                true
+                                image.toBitmap(), 0, 0, image.width, image.height, matrix, true
                             )
+                            navigateToDetail((1..11).random())
                             Log.d("Camera", "Camera take a picture")
                         }
 
@@ -111,8 +107,7 @@ private fun CameraContent(
                             super.onError(exception)
                             Log.e("Camera", "Couldn't take photo", exception)
                         }
-                    }
-                )
+                    })
             },
             modifier = modifier
                 .windowInsetsPadding(WindowInsets.safeGestures)

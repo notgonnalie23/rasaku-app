@@ -1,5 +1,7 @@
 package app.capstone.rasaku.utils
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -8,11 +10,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import java.text.SimpleDateFormat
 
+@OptIn(ExperimentalFoundationApi::class)
 fun <T> LazyListScope.gridItems(
     data: List<T>,
     columnCount: Int,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     itemContent: @Composable BoxScope.(T) -> Unit,
 ) {
@@ -21,14 +25,13 @@ fun <T> LazyListScope.gridItems(
     items(rows, key = { it.hashCode() }) { rowIndex ->
         Row(
             horizontalArrangement = horizontalArrangement,
-            modifier = modifier
+            modifier = modifier.animateItemPlacement()
         ) {
             for (columnIndex in 0 until columnCount) {
                 val itemIndex = rowIndex * columnCount + columnIndex
                 if (itemIndex < size) {
                     Box(
-                        modifier = Modifier.weight(1F, fill = true),
-                        propagateMinConstraints = true
+                        modifier = Modifier.weight(1F, fill = true), propagateMinConstraints = true
                     ) {
                         itemContent(data[itemIndex])
                     }
@@ -38,4 +41,22 @@ fun <T> LazyListScope.gridItems(
             }
         }
     }
+}
+
+fun String.isValidEmail(): Boolean {
+    val regex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$")
+    return matches(regex)
+}
+
+fun String.isValidPassword(): Boolean {
+    val regex = Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=()])(?=\\S+\$).{8,20}$")
+    return matches(regex)
+}
+
+fun String.isValidCollectionName(): Boolean = this.isNotEmpty() && this.length <= 24
+
+@SuppressLint("SimpleDateFormat")
+fun Long.getAsTime(): String {
+    val formatter = SimpleDateFormat("HH.mm")
+    return formatter.format(this)
 }

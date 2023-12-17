@@ -27,6 +27,7 @@ class FavoriteViewModel(private val repository: Repository) : ViewModel() {
     fun deleteFavorite(id: Long){
         viewModelScope.launch {
             repository.deleteFavorite(id)
+            repository.deleteFoodByFavoriteId(id)
         }
     }
 }

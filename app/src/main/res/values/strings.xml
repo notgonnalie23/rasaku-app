@@ -4,6 +4,9 @@
     <!--  Text Field Placeholder  -->
     <string name="search_food">Cari makanan…</string>
     <string name="enter_collection_name">Masukkan nama koleksi</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Konfirmasi Kata Sandi</string>
 
     <!--  Top App Bar Title  -->
     <string name="history">Riwayat</string>
@@ -20,7 +23,6 @@
 
     <!--  Bottom Sheet  -->
     <string name="create_favorite_collection">Buat koleksi favorit</string>
-    <string name="confirm">Konfirmasi</string>
 
     <!--  Info  -->
     <string name="info_take_picture">Letakkan objek makanan di tengah kamera, lalu tangkap gambar untuk melihat untuk mengetahui makanan apa itu</string>
@@ -29,10 +31,23 @@
     <string name="delete_collection">Hapus Koleksi Makanan</string>
     <string name="alert_delete_collection">Apakah anda yakin ingin menghapus %1$s?</string>
     <string name="alert_delete_this_collection">Apakah anda yakin ingin menghapus koleksi ini?</string>
+    <string name="delete_food">Hapus Makanan</string>
+    <string name="alert_delete_this_food">Apakah anda yakin ingin menghapus %1$s dari koleksi ini?</string>
+
+    <!--  Button  -->
+    <string name="login">Masuk</string>
+    <string name="register">Daftar</string>
     <string name="delete">Hapus</string>
     <string name="cancel">Batalkan</string>
+    <string name="confirm">Konfirmasi</string>
 
     <!--  Other Components  -->
     <string name="d_menu">%1$d menu</string>
     <string name="collections_unavailable">Anda belum mempunyai koleksi favorit.</string>
+    <string name="data_unavailable">Data tidak tersedia.</string>
+    <string name="collection_name_cant_be_empty">Nama koleksi tidak boleh kosong.</string>
+    <string name="max_char">Hanya boleh maks. %1$d karakter.</string>
+    <string name="history_unavailable">Belum ada daftar riwayat.</string>
+    <string name="food_unavailable">Makanan belum tersedia.</string>
+
 </resources>

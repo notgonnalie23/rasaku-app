@@ -1,5 +1,6 @@
 package app.capstone.rasaku.ui.screen.favorite
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,6 +22,7 @@ import app.capstone.rasaku.ui.ViewModelFactory
 import app.capstone.rasaku.ui.common.UiState
 import app.capstone.rasaku.ui.component.EmptyView
 import app.capstone.rasaku.ui.component.ListComponent
+import app.capstone.rasaku.ui.component.Loading
 import app.capstone.rasaku.ui.component.ModalDialog
 import app.capstone.rasaku.ui.theme.RasakuTheme
 
@@ -36,7 +38,10 @@ fun FavoriteScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
-        is UiState.Loading -> viewModel.getFavorites()
+        is UiState.Loading -> {
+            Loading()
+            viewModel.getFavorites()
+        }
 
         is UiState.Success ->
             FavoriteContent(
@@ -53,6 +58,7 @@ fun FavoriteScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun FavoriteContent(
     favorites: List<Favorite>,
@@ -66,7 +72,8 @@ private fun FavoriteContent(
 
     if (favorites.isNotEmpty())
         Box {
-            LazyColumn {
+            LazyColumn(
+            ) {
                 items(favorites) { data ->
                     ListComponent(
                         title = data.name,
@@ -78,7 +85,7 @@ private fun FavoriteContent(
                             isShowDialog = true
                         },
                         imageUrl = data.imageUrl,
-                        modifier = modifier
+                        modifier = modifier.animateItemPlacement()
                     )
                 }
             }
@@ -89,6 +96,7 @@ private fun FavoriteContent(
                     positive = stringResource(R.string.delete),
                     negative = stringResource(R.string.cancel),
                     onPositiveClick = {
+                        isShowDialog = false
                         delete(selectedId)
                     },
                     onNegativeClick = {
