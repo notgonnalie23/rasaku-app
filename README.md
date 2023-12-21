@@ -87,7 +87,7 @@ Web Service
 
 **Cloud Computing**
 
-- Flask
+- Node.js
 - Google Compute Engine
 - Google App Engine
 - Google Cloud Function
