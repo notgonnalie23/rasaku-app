@@ -1,5 +1,6 @@
 # RASAKU APPS
 GitHub Repositories of Bangkit Academy 2023 Capstone Project from team CH2-PS141.
+![Rasaku App with Loop Logo Animation](Presentation_Slide_Rasaku_app.gif)
 
 # About The Project
 In the current era of globalization, the prestige of traditional food is declining every year with the entry of foreign products. Through Rasaku, discover the richness of Indonesia's culinary heritage. Take advantage of our app's advanced features, including accurate identification and classification of traditional dishes, a treasure trove of authentic recipes, and personalized recommendations for the same foods-all integrated with a map to guide users to the best places...
