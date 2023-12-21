@@ -88,9 +88,8 @@ Web Service
 **Cloud Computing**
 
 - Node.js
-- Google Compute Engine
+- Google Storage
 - Google App Engine
-- Google Cloud Function
 - Google Cloud SQL
 
  **Design**
