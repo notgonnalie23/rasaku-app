@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "rasaku-app-407410",
+  "private_key_id": "c8336499c3c4dcff6fa92203e828f93adfde8110",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCvTWH2kr6dpbjY\nLp3aZpNhWpiDmvJCRS0reFSnAJxVxDX4KQpX2drApo96IiBCZHpMW8Ehojeo5iOz\nQASdW8/WV9t/R0hQxSfgGF7PW13jPZMQXkZFVJd5NAVbmTY1/PW5OSLmZkF3LRlQ\nkII/OpDpnOh5Q61AN1pFrUDqSJfJ8H7ZUSfVkeMHNkHy1hUfLGDoO8bDdecDdAoZ\nH5GH168BqvKu4VSsTYQyrKd5LQAMywDmwUbfHPOSnPMZHOvHh/CKcsBiame6Ttyq\nO2/AKq4c2Oc9ZBlXDnQSEOMwG8RGLZHHbffd/CCvhJggHTcSivttwFK280Ikei8V\nZ3B6xit9AgMBAAECggEAAOJQhKhPysa7rGdrx16uDpcg3sUIxLnJlQcJ0j/ICgyv\nwv0d/rxsBH2yioiihgMwtLLfwfYp9rGWa4B+pXaBkVCnHDi1Tib4YQJuc/g/fHZi\nh/oZu57GFsfi4QfgRJxuds0pdmT8noe9MXFRHtWCRpNSfs4PERxWWbSad7P/A/cu\n4YN5CdwUtLgDbhQaLCN75AcHTDBmG9xLO3wfMAH8tjQM1MWDdvL/2MBiqJs5hMMs\n0cFp5Ew58q6+8mIQw7egeTQ/moLvi6DxW2n1FZt99vlGq2TM973Ce0Q0EXBj9gtk\nq4P3p/9LqKahOhINBQG4GEskP0Zod2toofo/Fv5mcQKBgQDXjWT35ySNGq369UiB\n7MCM5A3SJTjbSzBc4Asgc9YLYgI09INeTPksMWl9YZtQUZHSp4/o9s+SvrNAYnS0\nINK65csSaWaR6AT6PfFEuDflvr8GKqJoZhR2J+qjszxt/EIEE7/m+15CIMx3d9oX\nJT4TDpZ34hWO4SldtQXm6NEVRQKBgQDQMnmCKsCNdj0HBBytu8nq25OPwPFLCOV+\nJQ25ZsBnciSl2qHxXc7i2TEIBEt9ZLUM/lWofbSYR/NHuJWDV2WqvH7Gjt3WKKnx\no23M3nLroz1mK5D/6pqLpK5QzjxdT3R9HndTI7gVmC2SXa/iTY0elTOBboAtAZKd\n9GuOCBbU2QKBgQC6OxFXFb8AomJahn0ks5YQpCBExZ//51Bbjb5PRYVSxFS/x9mQ\nKdTGF9LaXvA/Tpo8dETjtAnW8SgRon7N+eXXUB5JRAM4YEucoNPI2ZiByHFmNIOo\nyzk2dHpHAN5e8ClhOGb+e4MOgyPkvAoTITwmXt4lqZGSpnqE2ZfFzrSGOQKBgGWr\ngHL0dbufNgYrF+YvgldSiyj0S+EcoxWK+rzDVMovj33+2n6IFPPqpGsJzeOaPl/u\nA96YJI0I9eDcXwcYsulBy5cjRWnDydnauVAGgZBY0y8Fr3WKF5aCAS4syIW4u2Yu\nbo8HLmo9OmPzpGSbAoMg0VovoCBaWEMSjUN658thAoGBAI6agdZrcyyhVOI1BjBF\nH3b5+hud/oOgye4B00Z4Ky84sQPehLVYLNioOxlbBpCWwfS+lFTGRdX6vSQK7mkO\nMvnYEuLkMst/1bTwMOzh+j0wghh6RzwuNI6Rv1Jizsc2ELYf9rk3HzWJCms8HaeN\n5nLVBgZbHKdYWSoJNViH8nYn\n-----END PRIVATE KEY-----\n",
+  "client_email": "rasaku-app@rasaku-app-407410.iam.gserviceaccount.com",
+  "client_id": "105607755129631978740",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rasaku-app%40rasaku-app-407410.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
