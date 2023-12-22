@@ -1,7 +1,6 @@
 package app.capstone.rasaku.ui.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -29,10 +28,6 @@ fun ListComponent(
     onHold: () -> Unit = {},
     imageUrl: String? = null,
 ) {
-    val imageModifier = modifier
-        .padding(start = 24.dp)
-        .size(56.dp)
-
     ListItem(
         headlineContent = {
             Text(
@@ -42,28 +37,20 @@ fun ListComponent(
             )
         },
         leadingContent = {
-            if (imageUrl != null) {
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = title,
-                    placeholder = painterResource(id = R.drawable.img_placeholder),
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier
-                )
-            } else {
-                Image(
-                    painter = painterResource(id = R.drawable.img_placeholder),
-                    contentDescription = title,
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier
-                )
-            }
-        },
-        modifier = Modifier
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onHold,
+            AsyncImage(
+                model = imageUrl ?: "https://i.ibb.co/X7H93zg/img-placeholder.jpg",
+                contentDescription = title,
+                placeholder = painterResource(id = R.drawable.img_placeholder),
+                contentScale = ContentScale.Crop,
+                modifier = modifier
+                    .padding(start = 24.dp)
+                    .size(56.dp)
             )
+        },
+        modifier = Modifier.combinedClickable(
+            onClick = onClick,
+            onLongClick = onHold,
+        ),
     )
     Divider()
 }
@@ -78,48 +65,31 @@ fun ListComponent(
     onHold: () -> Unit = {},
     imageUrl: String? = null,
 ) {
-    val imageModifier = modifier
-        .padding(start = 24.dp)
-        .size(56.dp)
-
-    ListItem(
-        headlineContent = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyLarge,
+    ListItem(headlineContent = {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }, leadingContent = {
+            AsyncImage(
+                model = imageUrl ?: "https://i.ibb.co/X7H93zg/img-placeholder.jpg",
+                contentDescription = title,
+                placeholder = painterResource(id = R.drawable.img_placeholder),
+                contentScale = ContentScale.Crop,
+                modifier = modifier
+                    .padding(start = 24.dp)
+                    .size(56.dp)
             )
-        },
-        leadingContent = {
-            if (imageUrl != null) {
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = title,
-                    placeholder = painterResource(id = R.drawable.img_placeholder),
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier
-                )
-            } else {
-                Image(
-                    painter = painterResource(id = R.drawable.img_placeholder),
-                    contentDescription = title,
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier
-                )
-            }
-        },
-        trailingContent = {
-            Text(
-                text = trailing,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = modifier.padding(end = 16.dp)
-            )
-        },
-        modifier = Modifier
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onHold
-            )
+    }, trailingContent = {
+        Text(
+            text = trailing,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = modifier.padding(end = 16.dp)
+        )
+    }, modifier = Modifier.combinedClickable(
+        onClick = onClick, onLongClick = onHold
+    ),
     )
     Divider()
 }
@@ -134,47 +104,30 @@ fun ListComponent(
     imageUrl: String? = null,
     onHold: () -> Unit = {},
 ) {
-    val imageModifier = modifier
-        .padding(start = 24.dp)
-        .size(56.dp)
-
-    ListItem(
-        headlineContent = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = modifier.padding(end = 24.dp)
-            )
-        },
-        supportingContent = {
-            Text(
-                text = body,
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        },
-        leadingContent = {
-            if (imageUrl != null) {
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = title,
-                    placeholder = painterResource(id = R.drawable.img_placeholder),
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier
-                )
-            } else {
-                Image(
-                    painter = painterResource(id = R.drawable.img_placeholder),
-                    contentDescription = title,
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier
-                )
-            }
-        },
-        modifier = Modifier
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onHold
-            )
+    ListItem(headlineContent = {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = modifier.padding(end = 24.dp)
+        )
+    }, supportingContent = {
+        Text(
+            text = body,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+    }, leadingContent = {
+        AsyncImage(
+            model = imageUrl ?: "https://i.ibb.co/X7H93zg/img-placeholder.jpg",
+            contentDescription = title,
+            placeholder = painterResource(id = R.drawable.img_placeholder),
+            contentScale = ContentScale.Crop,
+            modifier = modifier
+                .padding(start = 24.dp)
+                .size(56.dp)
+        )
+    }, modifier = Modifier.combinedClickable(
+        onClick = onClick, onLongClick = onHold
+    ),
     )
     Divider()
 }

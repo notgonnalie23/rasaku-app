@@ -164,7 +164,7 @@ fun RasakuApp(
         Scaffold(topBar = {
             when (currentRoute) {
                 Screen.Home.route, Screen.Search.route, Screen.SearchResult.route -> Header(
-                    imageUrl = "https://placehold.co/48x48/png",
+                    imageUrl = null,
                     navigateToSearchInput = { navController.navigate(Screen.SearchInput.route) },
                     profileOnClick = {
                         // TODO: Check user already login or not
@@ -174,40 +174,44 @@ fun RasakuApp(
                     },
                 )
 
-                Screen.Camera.route -> TopAppBar(title = {
-                    Text(
-                        text = stringResource(R.string.what_is_this_food),
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = modifier.padding(horizontal = 8.dp)
-                    )
-                }, navigationIcon = {
-                    Icon(imageVector = Icons.Rounded.ArrowBack,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .clickable {
-                                navController.navigateUp()
-                            })
-                })
+                Screen.Camera.route -> TopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(R.string.what_is_this_food),
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = modifier.padding(horizontal = 8.dp)
+                        )
+                    },
+                    navigationIcon = {
+                        Icon(imageVector = Icons.Rounded.ArrowBack,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .clickable {
+                                    navController.navigateUp()
+                                })
+                    },
+                )
 
-                Screen.Favorite.route -> TopAppBar(title = {
-                    Text(
-                        text = stringResource(R.string.favorite),
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = modifier.padding(horizontal = 16.dp)
-                    )
-                }, actions = {
-                    Icon(imageVector = Icons.Rounded.CreateNewFolder,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(end = 24.dp)
-                            .clickable {
-                                scope.launch {
-                                    isSheetOpen = true
-                                }
-                            })
-                }
-
+                Screen.Favorite.route -> TopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(R.string.favorite),
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = modifier.padding(horizontal = 16.dp)
+                        )
+                    },
+                    actions = {
+                        Icon(imageVector = Icons.Rounded.CreateNewFolder,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(end = 24.dp)
+                                .clickable {
+                                    scope.launch {
+                                        isSheetOpen = true
+                                    }
+                                })
+                    },
                 )
 
                 Screen.History.route -> TopAppBar(
@@ -377,7 +381,7 @@ private fun BottomBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Header(
-    imageUrl: String,
+    imageUrl: String?,
     navigateToSearchInput: () -> Unit,
     profileOnClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -387,7 +391,8 @@ private fun Header(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = modifier.padding(horizontal = 16.dp)
         ) {
-            AsyncImage(model = imageUrl,
+            AsyncImage(
+                model = imageUrl ?: "https://i.ibb.co/0ZW5YV6/img-profile.png",
                 contentDescription = null,
                 placeholder = painterResource(id = R.drawable.img_placeholder),
                 contentScale = ContentScale.Crop,
@@ -396,7 +401,8 @@ private fun Header(
                     .clip(CircleShape)
                     .clickable {
                         profileOnClick()
-                    })
+                    },
+            )
             Box(contentAlignment = Alignment.CenterStart,
                 modifier = modifier
                     .fillMaxWidth()
@@ -438,7 +444,7 @@ private fun NavigationDrawer(
                 modifier = modifier.padding(24.dp)
             ) {
                 AsyncImage(
-                    model = "https://placehold.co/84x84/png",
+                    model = "https://i.ibb.co/0ZW5YV6/img-profile.png",
                     contentDescription = null,
                     placeholder = painterResource(id = R.drawable.img_placeholder),
                     contentScale = ContentScale.Crop,

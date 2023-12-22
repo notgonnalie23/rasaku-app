@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.capstone.rasaku.data.Repository
 import app.capstone.rasaku.model.Favorite
 import app.capstone.rasaku.model.Food
+import app.capstone.rasaku.model.FoodsItem
 import app.capstone.rasaku.model.History
 import app.capstone.rasaku.ui.common.UiState
 import app.capstone.rasaku.utils.FoodCountStatus
@@ -26,9 +27,27 @@ class DetailViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             try {
-                val response = repository.getFoodsById(id)
-                val food = response.data?.data?.get(0)
-                _uiState.value = UiState.Success(DetailState(food = food))
+                val response = repository.getFoods()
+                val foodResponse = repository.getFoodsById(id)
+
+                val food = foodResponse.data?.data?.get(0)
+                val recommendations = mutableListOf<FoodsItem>()
+                response.data?.let { data ->
+                    data.asSequence().shuffled().toList().map { item ->
+                        item?.let {
+                            if (it.city == food?.city && recommendations.size < 6) {
+                                recommendations.add(it)
+                            }
+                        }
+                    }
+                }
+
+                _uiState.value = UiState.Success(
+                    DetailState(
+                        food = food,
+                        recommendations = recommendations,
+                    )
+                )
             } catch (e: Exception) {
                 _uiState.value = UiState.Error(e.message.toString())
             }

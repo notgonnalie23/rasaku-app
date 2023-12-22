@@ -5,5 +5,6 @@ import app.capstone.rasaku.model.FoodsItem
 
 data class DetailState(
     val food : FoodsItem? = null,
+    val recommendations : List<FoodsItem> = emptyList(),
     val favorites : List<Favorite> = listOf()
 )

@@ -41,11 +41,10 @@ fun TransparentClipLayout(
             // Source
             drawRoundRect(
                 topLeft = Offset(
-                    x = (canvasWidth - widthInPx) / 2,
-                    y = (canvasHeight - heightInPx) / 2
+                    x = (canvasWidth - widthInPx) / 2, y = (canvasHeight - heightInPx) / 2
                 ),
                 size = Size(widthInPx, heightInPx),
-                cornerRadius = CornerRadius(30f,30f),
+                cornerRadius = CornerRadius(30f, 30f),
                 color = Color.Transparent,
                 blendMode = BlendMode.Clear
             )

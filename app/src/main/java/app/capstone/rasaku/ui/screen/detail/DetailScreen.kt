@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeGestures
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -88,6 +89,7 @@ fun DetailScreen(
 
         is UiState.Success -> {
             val food = (uiState as UiState.Success<DetailState>).data.food
+            val recommendations = (uiState as UiState.Success<DetailState>).data.recommendations
             food?.let {
                 val history = History(
                     id = it.idFood!!,
@@ -98,7 +100,7 @@ fun DetailScreen(
             }
             DetailContent(
                 food = food,
-                recommendations = emptyList(),
+                recommendations = recommendations,
                 dialogState = dialogState,
                 getFavorite = {
                     viewModel.getFavorites()
@@ -122,7 +124,7 @@ fun DetailScreen(
 @Composable
 private fun DetailContent(
     food: FoodsItem?,
-    recommendations: List<FoodsItem?>,
+    recommendations: List<FoodsItem>,
     dialogState: UiState<DetailState>,
     getFavorite: () -> Unit,
     insertFood: (Food) -> Unit,
@@ -164,8 +166,27 @@ private fun DetailContent(
                             tint = Color.White
                         )
                     }
+                    Box(
+                        modifier = modifier
+                            .offset(0.dp, 276.dp)
+                            .align(Alignment.TopCenter)
+                            .height(48.dp)
+                            .background(
+                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                shape = RoundedCornerShape(16.dp)
+                            )
+                    ) {
+                        Text(
+                            text = food.foodName.toString(),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = modifier
+                                .align(Alignment.Center)
+                                .padding(horizontal = 24.dp)
+                        )
+                    }
                 }
-                Spacer(modifier = modifier.height(24.dp))
+                Spacer(modifier = modifier.height(48.dp))
             }
             item {
                 Text(
@@ -210,16 +231,16 @@ private fun DetailContent(
                         contentAlignment = Alignment.Center,
                     ) {
                         FoodCard(
-                            name = item?.foodName.toString(),
-                            imageUrl = item?.imagesUrl.toString(),
+                            name = item.foodName.toString(),
+                            imageUrl = item.imagesUrl.toString(),
                             onClick = {
-                                navigateToFavoriteList(item?.idFood!!)
+                                navigateToFavoriteList(item.idFood!!)
                             },
                         )
                     }
                 }
             }
-            item { Spacer(modifier = modifier.height(84.dp)) }
+            item { Spacer(modifier = modifier.height(96.dp)) }
         }
 
         FloatingActionButton(

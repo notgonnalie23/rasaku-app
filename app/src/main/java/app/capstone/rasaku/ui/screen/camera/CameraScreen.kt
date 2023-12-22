@@ -2,7 +2,6 @@ package app.capstone.rasaku.ui.screen.camera
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture.OnImageCapturedCallback
@@ -34,8 +33,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import app.capstone.rasaku.R
+import app.capstone.rasaku.ml.Model
 import app.capstone.rasaku.ui.component.CameraPreview
 import app.capstone.rasaku.ui.component.TransparentClipLayout
+import app.capstone.rasaku.utils.FOOD_LIST
+import app.capstone.rasaku.utils.FOOD_NAMES
+import app.capstone.rasaku.utils.IMAGE_SIZE
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 @Composable
 fun CameraScreen(
@@ -45,7 +52,7 @@ fun CameraScreen(
     CameraContent(
         navigateToDetail = navigateToDetail,
         modifier = modifier,
-        )
+    )
 }
 
 @Composable
@@ -54,6 +61,7 @@ private fun CameraContent(
     modifier: Modifier = Modifier,
 ) {
     val context: Context = LocalContext.current
+
     val controller = remember {
         LifecycleCameraController(context).apply {
             setEnabledUseCases(
@@ -72,7 +80,7 @@ private fun CameraContent(
         )
 
         TransparentClipLayout(
-            width = 273.dp, height = 412.dp, modifier = modifier.matchParentSize()
+            width = 256.dp, height = 256.dp, modifier = modifier.matchParentSize()
         )
 
         Text(
@@ -88,24 +96,78 @@ private fun CameraContent(
 
         FloatingActionButton(
             onClick = {
-                controller.takePicture(ContextCompat.getMainExecutor(context),
+                controller.takePicture(
+                    ContextCompat.getMainExecutor(context),
                     object : OnImageCapturedCallback() {
                         override fun onCaptureSuccess(image: ImageProxy) {
                             super.onCaptureSuccess(image)
 
-                            val matrix = Matrix().apply {
-                                postRotate(image.imageInfo.rotationDegrees.toFloat())
-                            }
-                            val rotatedBitmap = Bitmap.createBitmap(
-                                image.toBitmap(), 0, 0, image.width, image.height, matrix, true
+                            val imageBitmap = image.toBitmap()
+                            val scaledBitmap = Bitmap.createScaledBitmap(
+                                imageBitmap, IMAGE_SIZE, IMAGE_SIZE, false
                             )
-                            navigateToDetail((1..11).random())
-                            Log.d("Camera", "Camera take a picture")
+
+                            classifyImage(
+                                image = scaledBitmap, navigateToDetail = navigateToDetail
+                            )
+                            Log.d("Alert", "Camera take a picture")
+                            image.close()
                         }
 
                         override fun onError(exception: ImageCaptureException) {
                             super.onError(exception)
-                            Log.e("Camera", "Couldn't take photo", exception)
+                            Log.e("Alert", "Couldn't take photo", exception)
+                        }
+
+                        private fun classifyImage(
+                            image: Bitmap, navigateToDetail: (Int) -> Unit
+                        ) {
+                            try {
+                                val model = Model.newInstance(context)
+                                val inputFeature0 = TensorBuffer.createFixedSize(
+                                    intArrayOf(1, 128, 128, 3), DataType.FLOAT32
+                                )
+                                val byteBuffer =
+                                    ByteBuffer.allocateDirect(4 * IMAGE_SIZE * IMAGE_SIZE * 3)
+                                byteBuffer.order(ByteOrder.nativeOrder())
+
+                                val intValues = IntArray(IMAGE_SIZE * IMAGE_SIZE)
+
+                                image.getPixels(
+                                    intValues, 0, image.width, 0, 0, image.width, image.height
+                                )
+                                var pixel = 0
+                                for (i in 0 until IMAGE_SIZE) {
+                                    for (j in 0 until IMAGE_SIZE) {
+                                        val `value` = intValues[pixel++]
+                                        byteBuffer.putFloat((`value` shr 16 and 0xFF) * (1f / 255f))
+                                        byteBuffer.putFloat((`value` shr 8 and 0xFF) * (1f / 255f))
+                                        byteBuffer.putFloat((`value` and 0xFF) * (1f / 255f))
+                                    }
+                                }
+
+                                inputFeature0.loadBuffer(byteBuffer)
+
+                                val output = model.process(inputFeature0)
+                                val outputFeature0 = output.outputFeature0AsTensorBuffer
+                                val confidences = outputFeature0.floatArray
+
+                                var maxPos = 0
+                                var maxConfidence = 0F
+
+                                for (i in confidences.indices) {
+                                    if (confidences[i] > maxConfidence) {
+                                        maxConfidence = confidences[i]
+                                        maxPos = i
+                                        Log.d("Alert","${FOOD_LIST[maxPos]}, ${FOOD_NAMES[maxPos]}")
+                                    }
+                                }
+                                Log.d("Alert","${FOOD_LIST[maxPos]}, ${FOOD_NAMES[maxPos]}")
+                                navigateToDetail(FOOD_LIST[maxPos])
+                                model.close()
+                            } catch (e: Exception) {
+                                Log.e("Alert", e.message.toString())
+                            }
                         }
                     })
             },
